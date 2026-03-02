@@ -4,6 +4,14 @@
 
 * fix changelog list items ([#65](https://github.com/Xerrion/DragonToast/issues/65)) ([1c399f4](https://github.com/Xerrion/DragonToast/commit/1c399f41beacb7b0b8b07ddd63df7422190ece88))
 
+## [1.10.2](https://github.com/DragonAddons/DragonToast/compare/1.10.1...1.10.2) (2026-03-02)
+
+
+### 🐛 Bug Fixes
+
+* animation glitches and deferred slide jumps ([#104](https://github.com/DragonAddons/DragonToast/issues/104)) ([#105](https://github.com/DragonAddons/DragonToast/issues/105)) ([b1ff4f1](https://github.com/DragonAddons/DragonToast/commit/b1ff4f1c1b9081db87b5021f229d87859e82e533))
+* extract CurrencyListener and resolve currency icons ([#102](https://github.com/DragonAddons/DragonToast/issues/102)) ([#103](https://github.com/DragonAddons/DragonToast/issues/103)) ([3976b34](https://github.com/DragonAddons/DragonToast/commit/3976b34bb8f17ca4f5b595f6c53ea099905b23ac))
+
 ## [1.10.1](https://github.com/DragonAddons/DragonToast/compare/1.10.0...1.10.1) (2026-03-01)
 
 
