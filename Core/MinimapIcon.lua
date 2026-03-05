@@ -43,8 +43,8 @@ function ns.MinimapIcon.Initialize()
                     end
                 else
                     -- Left-click: toggle config
-                    if ns.ToggleConfigWindow then
-                        ns.ToggleConfigWindow()
+                    if ns.ToggleOptions then
+                        ns.ToggleOptions()
                     end
                 end
             elseif button == "RightButton" then

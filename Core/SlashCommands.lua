@@ -99,9 +99,9 @@ function ns.HandleSlashCommand(input)
         end
 
     elseif cmd == "config" or cmd == "options" or cmd == "settings" then
-        -- Open standalone AceGUI config window
-        if ns.ToggleConfigWindow then
-            ns.ToggleConfigWindow()
+        -- Open options panel
+        if ns.ToggleOptions then
+            ns.ToggleOptions()
         end
 
     elseif cmd == "lock" or cmd == "unlock" or cmd == "move" then

@@ -18,6 +18,7 @@ local ChatFrame_OpenChat = ChatFrame_OpenChat
 local GetCoinTextureString = GetCoinTextureString
 local UIParent = UIParent
 local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
+local math_ceil = math.ceil
 local LSM = LibStub("LibSharedMedia-3.0")
 
 -------------------------------------------------------------------------------
@@ -28,8 +29,13 @@ local framePool = {}
 local frameCount = 0
 
 --- Build a cache key for backdrop params to skip redundant SetBackdrop calls during stacking
-local function GetBackdropKey(bgFile, edgeFile, edgeSize, inset)
-    return (bgFile or "") .. "|" .. (edgeFile or "") .. "|" .. tostring(edgeSize) .. "|" .. tostring(inset)
+local function GetBackdropKey(bgFile)
+    return bgFile or ""
+end
+
+--- Build a cache key for the border frame backdrop
+local function GetBorderKey(edgeFile, edgeSize)
+    return (edgeFile or "") .. "|" .. tostring(edgeSize)
 end
 
 -------------------------------------------------------------------------------
@@ -52,7 +58,7 @@ local function ApplyLayout(frame, db, showIcon)
     local borderInset = db.appearance.borderInset or 0
     local glowWidth = db.appearance.glowWidth or 4
     local iconSize = db.appearance.iconSize or 36
-    local contentInset = borderSize > 0 and math.max(borderInset, math.ceil(borderSize / 2)) or 0
+    local contentInset = borderSize > 0 and borderInset or 0
 
     -- Update content frame inset to sit inside the border
     frame.content:ClearAllPoints()
@@ -94,26 +100,48 @@ end
 --- Apply backdrop, background color, and border color to root frame and iconFrame
 local function ApplyBackdrop(frame, db, qualityR, qualityG, qualityB)
     local borderSize = db.appearance.borderSize or 1
-    local borderInset = db.appearance.borderInset or 0
 
-    -- Root frame backdrop
+    -- Root frame backdrop: background only, no edge
     local bgFile = LSM:Fetch("background", db.appearance.backgroundTexture or "Solid")
-    local edgeFile = borderSize > 0
-        and LSM:Fetch("border", db.appearance.borderTexture or "None") or nil
-    local inset = borderSize > 0 and borderInset or 0
-    local backdropKey = GetBackdropKey(bgFile, edgeFile, borderSize, inset)
+    local backdropKey = GetBackdropKey(bgFile)
     if frame._backdropKey ~= backdropKey then
         frame:SetBackdrop({
             bgFile = bgFile,
-            edgeFile = edgeFile,
-            edgeSize = borderSize,
-            insets = { left = inset, right = inset, top = inset, bottom = inset },
+            edgeFile = nil,
+            edgeSize = 0,
+            insets = { left = 0, right = 0, top = 0, bottom = 0 },
         })
         frame._backdropKey = backdropKey
     end
 
     local bgColor = db.appearance.backgroundColor or { r = 0.05, g = 0.05, b = 0.05 }
     frame:SetBackdropColor(bgColor.r, bgColor.g, bgColor.b, db.appearance.backgroundAlpha)
+
+    -- Border frame: edge only, no background. Positioned outside the main frame.
+    local edgeFile = borderSize > 0
+        and LSM:Fetch("border", db.appearance.borderTexture or "None") or nil
+    local borderKey = GetBorderKey(edgeFile, borderSize)
+    if frame._borderKey ~= borderKey then
+        if borderSize > 0 and edgeFile then
+            frame.borderFrame:SetBackdrop({
+                bgFile = nil,
+                edgeFile = edgeFile,
+                edgeSize = borderSize,
+                insets = { left = 0, right = 0, top = 0, bottom = 0 },
+            })
+            frame.borderFrame:Show()
+        else
+            frame.borderFrame:SetBackdrop(nil)
+            frame.borderFrame:Hide()
+        end
+        frame._borderKey = borderKey
+    end
+
+    -- Reposition border frame so the edge texture overlaps the toast background
+    local offset = math_ceil(borderSize / 2)
+    frame.borderFrame:ClearAllPoints()
+    frame.borderFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -offset, offset)
+    frame.borderFrame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", offset, -offset)
 
     -- iconFrame backdrop (always 1px solid border, no background)
     local iconEdge = "Interface\\Buttons\\WHITE8x8"
@@ -130,10 +158,10 @@ local function ApplyBackdrop(frame, db, qualityR, qualityG, qualityB)
 
     -- Border colors
     if db.appearance.qualityBorder and qualityR then
-        frame:SetBackdropBorderColor(qualityR, qualityG, qualityB, 0.6)
+        frame.borderFrame:SetBackdropBorderColor(qualityR, qualityG, qualityB, 0.6)
         frame.iconFrame:SetBackdropBorderColor(qualityR, qualityG, qualityB, 0.6)
     else
-        frame:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
+        frame.borderFrame:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
         frame.iconFrame:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
     end
 end
@@ -177,12 +205,24 @@ local function CreateToastFrame()
 
     frame:SetBackdrop({
         bgFile = "Interface\\Buttons\\WHITE8x8",
+        edgeFile = nil,
+        edgeSize = 0,
+        insets = { left = 0, right = 0, top = 0, bottom = 0 },
+    })
+    frame:SetBackdropColor(0.05, 0.05, 0.05, 0.7)
+
+    -- Border frame: wraps outside the main frame, edge only
+    frame.borderFrame = CreateFrame("Frame", nil, frame, "BackdropTemplate")
+    frame.borderFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -1, 1)
+    frame.borderFrame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 1, -1)
+    frame.borderFrame:SetFrameLevel(frame:GetFrameLevel() + 1)
+    frame.borderFrame:SetBackdrop({
+        bgFile = nil,
         edgeFile = "Interface\\Buttons\\WHITE8x8",
         edgeSize = 1,
         insets = { left = 0, right = 0, top = 0, bottom = 0 },
     })
-    frame:SetBackdropColor(0.05, 0.05, 0.05, 0.7)
-    frame:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
+    frame.borderFrame:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
 
     -- Content frame: child for all visible content (above root border)
     frame.content = CreateFrame("Frame", nil, frame)
@@ -487,6 +527,7 @@ function ns.ToastFrame.Release(frame)
     frame.lootData = nil
     frame._noAnimTimer = nil
     frame._backdropKey = nil
+    frame._borderKey = nil
     frame._iconBackdropKey = nil
     frame._isExiting = false
     frame._isEntering = false

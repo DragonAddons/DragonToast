@@ -1,32 +1,72 @@
 -------------------------------------------------------------------------------
 -- ConfigWindow.lua
--- Standalone AceGUI configuration window for DragonToast
+-- LoadOnDemand bridge for DragonToast_Options
 --
 -- Supported versions: TBC Anniversary, Retail, MoP Classic
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
 
-local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+local C_AddOns = C_AddOns
+local IsAddOnLoaded = IsAddOnLoaded
+
+-------------------------------------------------------------------------------
+-- Helpers
+-------------------------------------------------------------------------------
+
+local function IsOptionsLoaded()
+    if C_AddOns and C_AddOns.IsAddOnLoaded then
+        return C_AddOns.IsAddOnLoaded("DragonToast_Options")
+    elseif IsAddOnLoaded then
+        return IsAddOnLoaded("DragonToast_Options")
+    end
+    return false
+end
+
+local function LoadOptions()
+    if IsOptionsLoaded() then return true end
+
+    if C_AddOns and C_AddOns.LoadAddOn then
+        C_AddOns.LoadAddOn("DragonToast_Options")
+    elseif LoadAddOn then
+        LoadAddOn("DragonToast_Options")
+    end
+
+    return IsOptionsLoaded()
+end
 
 -------------------------------------------------------------------------------
 -- Config Window Management
 -------------------------------------------------------------------------------
 
-function ns.OpenConfigWindow()
-    -- AceConfigDialog:Open() creates a standalone AceGUI Frame window
-    -- This is the standard Ace3 pattern for standalone config UIs
-    AceConfigDialog:Open(ADDON_NAME)
+function ns.OpenOptions()
+    if not LoadOptions() then
+        ns.Print("DragonToast_Options addon not found. Please ensure it is installed.")
+        return
+    end
+
+    if DragonToast_Options and DragonToast_Options.Open then
+        DragonToast_Options.Open()
+    end
 end
 
-function ns.CloseConfigWindow()
-    AceConfigDialog:Close(ADDON_NAME)
+function ns.CloseOptions()
+    if not IsOptionsLoaded() then return end
+
+    if DragonToast_Options and DragonToast_Options.Close then
+        DragonToast_Options.Close()
+    end
 end
 
-function ns.ToggleConfigWindow()
-    if AceConfigDialog.OpenFrames and AceConfigDialog.OpenFrames[ADDON_NAME] then
-        ns.CloseConfigWindow()
+function ns.ToggleOptions()
+    if not LoadOptions() then
+        ns.Print("DragonToast_Options addon not found. Please ensure it is installed.")
+        return
+    end
+
+    if DragonToast_Options and DragonToast_Options.Toggle then
+        DragonToast_Options.Toggle()
     else
-        ns.OpenConfigWindow()
+        ns.OpenOptions()
     end
 end

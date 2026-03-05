@@ -3,6 +3,7 @@ max_line_length = 120
 codes = true
 exclude_files = {
     "Libs/",
+    "DragonToast_Options/",
 }
 
 ignore = {
@@ -14,6 +15,7 @@ ignore = {
 
 globals = {
     "DragonToastDB",
+    "DragonToastNS",
     "SLASH_DRAGONTOAST1",
     "SLASH_DRAGONTOAST2",
     "SlashCmdList",
@@ -61,6 +63,9 @@ read_globals = {
 
     -- Ace3
     "LibStub",
+
+    -- LoadOnDemand
+    "C_AddOns", "IsAddOnLoaded", "LoadAddOn", "DragonToast_Options",
 
     -- ElvUI
     "ElvUI",
