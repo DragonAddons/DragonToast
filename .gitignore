@@ -4,8 +4,11 @@
 # Windows reserved-name device artifact
 nul
 
-# Libs managed by .pkgmeta externals (submodules Ace3 and LibAnimate are tracked separately)
+# Libs managed by .pkgmeta externals (all tracked as git submodules)
 Libs/*
 !Libs/Ace3
 !Libs/LibAnimate
+!Libs/LibDataBroker-1.1
+!Libs/LibDBIcon-1.0
+!Libs/LibSharedMedia-3.0
 !Libs/embeds.xml
