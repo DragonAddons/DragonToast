@@ -18,6 +18,7 @@ local ChatFrame_OpenChat = ChatFrame_OpenChat
 local GetCoinTextureString = GetCoinTextureString
 local UIParent = UIParent
 local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
+local math_ceil = math.ceil
 local LSM = LibStub("LibSharedMedia-3.0")
 
 -------------------------------------------------------------------------------
@@ -137,7 +138,7 @@ local function ApplyBackdrop(frame, db, qualityR, qualityG, qualityB)
     end
 
     -- Reposition border frame so the edge texture overlaps the toast background
-    local offset = 2
+    local offset = math_ceil(borderSize / 2)
     frame.borderFrame:ClearAllPoints()
     frame.borderFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -offset, offset)
     frame.borderFrame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", offset, -offset)
