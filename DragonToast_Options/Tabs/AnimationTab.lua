@@ -52,7 +52,7 @@ local function AnchorWidget(widget, parent, yOffset)
 end
 
 local function GetEntranceAnimationValues()
-    local lib = LibStub("LibAnimate-1.0", true)
+    local lib = LibStub("LibAnimate", true)
     if not lib then return {} end
     local names = lib:GetEntranceAnimations()
     local values = { { value = "none", text = "None" } }
@@ -63,7 +63,7 @@ local function GetEntranceAnimationValues()
 end
 
 local function GetExitAnimationValues()
-    local lib = LibStub("LibAnimate-1.0", true)
+    local lib = LibStub("LibAnimate", true)
     if not lib then return {} end
     local names = lib:GetExitAnimations()
     local values = { { value = "none", text = "None" } }
@@ -74,7 +74,7 @@ local function GetExitAnimationValues()
 end
 
 local function GetAttentionAnimationValues()
-    local lib = LibStub("LibAnimate-1.0", true)
+    local lib = LibStub("LibAnimate", true)
     if not lib then return { { value = "none", text = "None" } } end
     local names = lib:GetAttentionAnimations()
     local values = { { value = "none", text = "None" } }
