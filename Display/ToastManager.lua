@@ -125,8 +125,7 @@ end
 
 local function GetToastPosition(index)
     local db = ns.Addon.db.profile.display
-    local borderSize = ns.Addon.db.profile.appearance and ns.Addon.db.profile.appearance.borderSize or 0
-    local spacing = db.toastHeight + (db.spacing or TOAST_SPACING) + borderSize * 2
+    local spacing = db.toastHeight + (db.spacing or TOAST_SPACING) + 4
     local offset = (index - 1) * spacing
 
     if db.growDirection == "UP" then

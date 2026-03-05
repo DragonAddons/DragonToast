@@ -137,7 +137,7 @@ local function ApplyBackdrop(frame, db, qualityR, qualityG, qualityB)
     end
 
     -- Reposition border frame so the edge texture overlaps the toast background
-    local offset = 1
+    local offset = 2
     frame.borderFrame:ClearAllPoints()
     frame.borderFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -offset, offset)
     frame.borderFrame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", offset, -offset)
