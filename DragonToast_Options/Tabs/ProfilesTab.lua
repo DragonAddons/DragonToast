@@ -21,7 +21,7 @@ local StaticPopupDialogs = StaticPopupDialogs
 -- Namespace references
 -------------------------------------------------------------------------------
 
-local dtns = ns.dtns
+local dtns
 
 -------------------------------------------------------------------------------
 -- Constants
@@ -220,6 +220,7 @@ end
 -------------------------------------------------------------------------------
 
 local function CreateContent(parent)
+    dtns = ns.dtns
     local db = dtns.Addon.db
     local yOffset = PADDING_TOP
 

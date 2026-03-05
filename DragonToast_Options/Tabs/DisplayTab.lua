@@ -17,7 +17,7 @@ local math_abs = math.abs
 -- Namespace references
 -------------------------------------------------------------------------------
 
-local dtns = ns.dtns
+local dtns
 
 -------------------------------------------------------------------------------
 -- Constants
@@ -294,6 +294,7 @@ end
 -------------------------------------------------------------------------------
 
 local function CreateContent(parent)
+    dtns = ns.dtns
     local yOffset = PADDING_TOP
 
     yOffset = CreateLayoutSection(parent, yOffset)

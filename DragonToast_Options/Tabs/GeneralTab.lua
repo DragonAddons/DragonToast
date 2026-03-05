@@ -20,7 +20,7 @@ local pairs = pairs
 -- Namespace references
 -------------------------------------------------------------------------------
 
-local dtns = ns.dtns
+local dtns
 local LSM = LibStub("LibSharedMedia-3.0")
 
 -------------------------------------------------------------------------------
@@ -193,6 +193,7 @@ end
 -------------------------------------------------------------------------------
 
 local function CreateContent(parent)
+    dtns = ns.dtns
     local yOffset = PADDING_TOP
 
     yOffset = CreateCoreSection(parent, yOffset)

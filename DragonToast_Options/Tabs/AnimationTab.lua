@@ -20,7 +20,7 @@ local tonumber = tonumber
 -- Namespace references
 -------------------------------------------------------------------------------
 
-local dtns = ns.dtns
+local dtns
 local LibAnimate = LibStub("LibAnimate-1.0", true)
 
 -------------------------------------------------------------------------------
@@ -334,6 +334,7 @@ end
 -------------------------------------------------------------------------------
 
 local function CreateContent(parent)
+    dtns = ns.dtns
     local yOffset = PADDING_TOP
     local attentionState = {}
 

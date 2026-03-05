@@ -14,12 +14,6 @@ local ADDON_NAME, ns = ...
 local tinsert = table.insert
 
 -------------------------------------------------------------------------------
--- Bridge to DragonToast namespace
--------------------------------------------------------------------------------
-
-local dtns = _G.DragonToastNS
-
--------------------------------------------------------------------------------
 -- Widget and tab registries (populated by subsequent files)
 -------------------------------------------------------------------------------
 
@@ -54,6 +48,12 @@ end
 -------------------------------------------------------------------------------
 
 local function CreateOptionsPanel()
+    ns.dtns = _G.DragonToastNS
+    if not ns.dtns then
+        print("|cffff6600[DragonToast_Options]|r DragonToast namespace not found.")
+        return
+    end
+
     local panel = ns.Widgets.CreatePanel("DragonToastOptionsFrame", 800, 600)
 
     -- Tab group below title bar
@@ -98,5 +98,4 @@ end
 -- Expose namespace bridge for widgets/tabs
 -------------------------------------------------------------------------------
 
-ns.dtns = dtns
 ns.RefreshVisibleWidgets = RefreshVisibleWidgets

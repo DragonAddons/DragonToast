@@ -18,7 +18,7 @@ local tonumber = tonumber
 -- Namespace references
 -------------------------------------------------------------------------------
 
-local dtns = ns.dtns
+local dtns
 
 -------------------------------------------------------------------------------
 -- Constants
@@ -177,6 +177,7 @@ end
 -------------------------------------------------------------------------------
 
 local function CreateContent(parent)
+    dtns = ns.dtns
     local yOffset = PADDING_TOP
 
     yOffset = CreateQualitySection(parent, yOffset)
