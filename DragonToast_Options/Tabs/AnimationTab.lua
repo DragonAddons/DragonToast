@@ -12,8 +12,8 @@ local ADDON_NAME, ns = ...
 -------------------------------------------------------------------------------
 
 local math_abs = math.abs
+local ipairs = ipairs
 local pairs = pairs
-local table_sort = table.sort
 local tonumber = tonumber
 
 -------------------------------------------------------------------------------
@@ -21,7 +21,6 @@ local tonumber = tonumber
 -------------------------------------------------------------------------------
 
 local dtns
-local LibAnimate = LibStub("LibAnimate-1.0", true)
 
 -------------------------------------------------------------------------------
 -- Constants
@@ -53,39 +52,35 @@ local function AnchorWidget(widget, parent, yOffset)
 end
 
 local function GetEntranceAnimationValues()
-    if not LibAnimate then return {} end
-    local anims = LibAnimate:GetEntranceAnimations()
-    local values = {}
-    for key, name in pairs(anims) do
-        values[#values + 1] = { value = key, text = name }
+    local lib = LibStub("LibAnimate-1.0", true)
+    if not lib then return {} end
+    local names = lib:GetEntranceAnimations()
+    local values = { { value = "none", text = "None" } }
+    for _, name in ipairs(names) do
+        values[#values + 1] = { value = name, text = name }
     end
-    table_sort(values, function(a, b) return a.text < b.text end)
     return values
 end
 
 local function GetExitAnimationValues()
-    if not LibAnimate then return {} end
-    local anims = LibAnimate:GetExitAnimations()
-    local values = {}
-    for key, name in pairs(anims) do
-        values[#values + 1] = { value = key, text = name }
+    local lib = LibStub("LibAnimate-1.0", true)
+    if not lib then return {} end
+    local names = lib:GetExitAnimations()
+    local values = { { value = "none", text = "None" } }
+    for _, name in ipairs(names) do
+        values[#values + 1] = { value = name, text = name }
     end
-    table_sort(values, function(a, b) return a.text < b.text end)
     return values
 end
 
 local function GetAttentionAnimationValues()
-    if not LibAnimate then return { { value = "none", text = "None" } } end
-    local anims = LibAnimate:GetAttentionAnimations()
+    local lib = LibStub("LibAnimate-1.0", true)
+    if not lib then return { { value = "none", text = "None" } } end
+    local names = lib:GetAttentionAnimations()
     local values = { { value = "none", text = "None" } }
-    for key, name in pairs(anims) do
-        values[#values + 1] = { value = key, text = name }
+    for _, name in ipairs(names) do
+        values[#values + 1] = { value = name, text = name }
     end
-    table_sort(values, function(a, b)
-        if a.value == "none" then return true end
-        if b.value == "none" then return false end
-        return a.text < b.text
-    end)
     return values
 end
 

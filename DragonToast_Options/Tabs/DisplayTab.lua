@@ -268,7 +268,7 @@ local function CreateAnchorSection(parent, yOffset)
         tooltip = "Show and unlock the toast anchor for repositioning",
         get = function()
             local anchor = _G["DragonToastAnchor"]
-            return anchor and anchor:IsShown() or false
+            return anchor and anchor.overlay and anchor.overlay:IsShown() or false
         end,
         set = function() dtns.ToastManager:ToggleLock() end,
     })
