@@ -3,7 +3,7 @@
 ## Interface-Mists: 50502, 50503
 ## Title: Dragon Toast
 ## Notes: Every drop deserves a toast. A dragon-forged loot feed for your adventures
-## Author: @project-author@
+## Author: Xerrion
 ## Version: @project-version@
 ## SavedVariables: DragonToastDB
 ## X-Category: Loot
@@ -38,13 +38,20 @@ Listeners\MailListener_TBC.lua
 Listeners\HonorListener_TBC.lua
 Listeners\ReputationListener_TBC.lua
 #@end-tbc-anniversary@
-#@non-tbc-anniversary@
+#@retail@
 Listeners\LootListener_Retail.lua
 Listeners\MailListener_Retail.lua
 Listeners\HonorListener_Retail.lua
 Listeners\ReputationListener_Retail.lua
 Listeners\CurrencyListener_Retail.lua
-#@end-non-tbc-anniversary@
+#@end-retail@
+#@version-mists@
+Listeners\LootListener_Retail.lua
+Listeners\MailListener_Retail.lua
+Listeners\HonorListener_Retail.lua
+Listeners\ReputationListener_Retail.lua
+Listeners\CurrencyListener_Retail.lua
+#@end-version-mists@
 
 # Shared listeners
 Listeners\XPListener.lua
