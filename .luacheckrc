@@ -120,5 +120,9 @@ files["spec/**"] = {
         -- WoW API mocks (set as globals in wow_mock.lua)
         "GetTime", "InCombatLockdown", "PlaySoundFile", "UnitName",
         "GetCoinTextureString", "CreateFrame", "UIParent", "LibStub", "wipe",
+
+        -- WoW money globals (set in ListenerUtils_spec.lua)
+        "GOLD_AMOUNT", "SILVER_AMOUNT", "COPPER_AMOUNT",
+        "GOLD_AMOUNT_TEXTURE", "SILVER_AMOUNT_TEXTURE", "COPPER_AMOUNT_TEXTURE",
     },
 }
