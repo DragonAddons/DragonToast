@@ -11,7 +11,6 @@
 ## X-License: MIT
 ## X-Curse-Project-ID: 1468628
 ## X-Wago-ID: E6gvQAN1
-## OptionalDeps: DragonToast_Options
 
 # Libraries
 Libs\embeds.xml
