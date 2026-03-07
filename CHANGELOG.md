@@ -4,6 +4,23 @@
 
 * fix changelog list items ([#65](https://github.com/Xerrion/DragonToast/issues/65)) ([1c399f4](https://github.com/Xerrion/DragonToast/commit/1c399f41beacb7b0b8b07ddd63df7422190ece88))
 
+## [1.13.0](https://github.com/DragonAddons/DragonToast/compare/1.12.1...1.13.0) (2026-03-07)
+
+
+### 🚀 Features
+
+* add AceLocale-3.0 localization support ([#95](https://github.com/DragonAddons/DragonToast/issues/95)) ([#117](https://github.com/DragonAddons/DragonToast/issues/117)) ([0780b45](https://github.com/DragonAddons/DragonToast/commit/0780b45a9e9570803331f86f43c101fdeb603fba))
+
+
+### 🐛 Bug Fixes
+
+* clarify slash command help and toggle behavior ([#114](https://github.com/DragonAddons/DragonToast/issues/114)) ([016ce4c](https://github.com/DragonAddons/DragonToast/commit/016ce4caf96242986424da3678539c4f2e6468eb))
+
+
+### 🚜 Refactor
+
+* convert to monorepo structure ([#116](https://github.com/DragonAddons/DragonToast/issues/116)) ([689fc89](https://github.com/DragonAddons/DragonToast/commit/689fc89f3b97760d29bbb66794838f2b515fea51))
+
 ## [1.12.1](https://github.com/DragonAddons/DragonToast/compare/1.12.0...1.12.1) (2026-03-06)
 
 
