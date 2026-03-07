@@ -17,9 +17,9 @@ local function LoadListenerUtils()
         ListenerUtils = {},
     }
 
-    local chunk, err = loadfile("Core/ListenerUtils.lua")
+    local chunk, err = loadfile("DragonToast/Core/ListenerUtils.lua")
     if not chunk then
-        error("Failed to load Core/ListenerUtils.lua: " .. (err or "unknown error"))
+        error("Failed to load DragonToast/Core/ListenerUtils.lua: " .. (err or "unknown error"))
     end
 
     chunk("DragonToast", ns)

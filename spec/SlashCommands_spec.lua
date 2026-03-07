@@ -4,9 +4,9 @@
 -------------------------------------------------------------------------------
 
 local function LoadSlashCommands(namespace)
-    local chunk, err = loadfile("Core/SlashCommands.lua")
+    local chunk, err = loadfile("DragonToast/Core/SlashCommands.lua")
     if not chunk then
-        error("Failed to load Core/SlashCommands.lua: " .. (err or "unknown error"))
+        error("Failed to load DragonToast/Core/SlashCommands.lua: " .. (err or "unknown error"))
     end
 
     chunk("DragonToast", namespace)

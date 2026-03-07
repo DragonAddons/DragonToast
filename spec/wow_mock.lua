@@ -284,7 +284,7 @@ end
 -------------------------------------------------------------------------------
 
 function M.LoadToastManager(ns)
-    local path = "Display/ToastManager.lua"
+    local path = "DragonToast/Display/ToastManager.lua"
     local chunk, err = loadfile(path)
     if not chunk then
         error("Failed to load " .. path .. ": " .. (err or "unknown error"))
