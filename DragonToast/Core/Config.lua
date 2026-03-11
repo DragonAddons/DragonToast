@@ -86,7 +86,7 @@ local defaults = {
 
         sound = {
             enabled = false,
-            soundFile = "None",
+            soundFile = "Dragon Toast",
         },
 
         combat = {
