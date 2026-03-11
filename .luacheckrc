@@ -8,6 +8,7 @@ exclude_files = {
 ignore = {
     "212/self",
     "211/ADDON_NAME",
+    "211/ns",
     "211/_.*",  -- unused variables prefixed with underscore
     "213/_.*",  -- unused loop variables prefixed with underscore
 }

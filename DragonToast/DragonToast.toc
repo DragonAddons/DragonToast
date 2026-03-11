@@ -30,6 +30,7 @@ Locales\zhTW.lua
 
 # Core (shared)
 Core\Init.lua
+Core\Media.lua
 Core\ListenerUtils.lua
 Core\Presets.lua
 Core\Config.lua
