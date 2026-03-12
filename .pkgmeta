@@ -3,8 +3,8 @@ enable-toc-creation: yes
 manual-changelog: .release/CHANGELOG.md
 
 move-folders:
-    DragonToast/DragonToast: DragonToast
-    DragonToast/DragonToast_Options: DragonToast_Options
+  DragonToast/DragonToast: DragonToast
+  DragonToast/DragonToast_Options: DragonToast_Options
 
 externals:
   DragonToast/Libs/Ace3: https://repos.wowace.com/wow/ace3/trunk
@@ -17,11 +17,10 @@ ignore:
   - ".git*"
   - .luacheckrc
   - .release
-  - scripts
   - "*.md"
   - "*.png"
   - release-please-config.json
   - .release-please-manifest.json
-  - *spec/
-  - scripts/
-  - "Assets/*logo*"
+  - "*spec/"
+  - "*scripts/"
+  - "*Assets/"

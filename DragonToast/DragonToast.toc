@@ -1,6 +1,6 @@
-## Interface: 110207, 120001, 120000
+## Interface: 120001
 ## Interface-BCC: 20505
-## Interface-Mists: 50502, 50503
+## Interface-Mists: 50503
 ## Title: Dragon Toast
 ## Notes: Every drop deserves a toast. A dragon-forged loot feed for your adventures
 ## Author: Xerrion
@@ -51,13 +51,6 @@ Listeners\MailListener_TBC.lua
 Listeners\HonorListener_TBC.lua
 Listeners\ReputationListener_TBC.lua
 #@end-version-bcc@
-#@version-retail@
-Listeners\LootListener_Retail.lua
-Listeners\MailListener_Retail.lua
-Listeners\HonorListener_Retail.lua
-Listeners\ReputationListener_Retail.lua
-Listeners\CurrencyListener_Retail.lua
-#@end-version-retail@
 #@version-mists@
 Listeners\LootListener_Mists.lua
 Listeners\MailListener_Mists.lua
@@ -65,6 +58,13 @@ Listeners\HonorListener_Mists.lua
 Listeners\ReputationListener_Mists.lua
 Listeners\CurrencyListener_Mists.lua
 #@end-version-mists@
+#@version-retail@
+Listeners\LootListener_Retail.lua
+Listeners\MailListener_Retail.lua
+Listeners\HonorListener_Retail.lua
+Listeners\ReputationListener_Retail.lua
+Listeners\CurrencyListener_Retail.lua
+#@end-version-retail@
 
 # Shared listeners
 Listeners\XPListener.lua
