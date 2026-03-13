@@ -281,6 +281,9 @@ function ns.Widgets.CreateSlider(parent, opts)
         step = opts.step or 1,
     }
 
+    -- Normalize initial value to valid range and step
+    state.currentValue = Clamp(RoundToStep(state.currentValue, state.step), state.minVal, state.maxVal)
+
     local label, slider, editBox = CreateSliderElements(frame, opts, state)
     SetupSliderEvents(slider, editBox, opts, state)
     AttachSliderAPI(frame, slider, editBox, label, opts, state)

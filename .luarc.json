@@ -12,13 +12,7 @@
             "spec"
         ],
         "checkThirdParty": "Apply",
-        "library": [
-            "~/.config/lua-ls/vscode-wow-api/Annotations",
-            "/mnt/f/Repos/wow-addons/docs/retail/Helix",
-            "/mnt/f/Repos/wow-addons/docs/classic_mists/Helix",
-            "/mnt/f/Repos/wow-addons/docs/classic_anniversary/Helix",
-            "/mnt/f/Repos/wow-addons/docs/retail/Blizzard_ItemButton"
-        ]
+        "library": []
     },
     "diagnostics": {
         "enable": true,

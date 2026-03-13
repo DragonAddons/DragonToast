@@ -5,7 +5,7 @@
 -- Supported versions: TBC Anniversary, Retail, MoP Classic
 -------------------------------------------------------------------------------
 
-local ADDON_NAME, ns = ...
+local _, ns = ...
 
 -------------------------------------------------------------------------------
 -- Cached WoW API
@@ -153,7 +153,8 @@ local function BuildRollWonToast(rollData)
         itemSubType = nil,
         quantity = rollData.quantity or 1,
         looter = rollData.winnerName or UnitName(PLAYER_UNIT) or L["You"],
-        isSelf = rollData.isSelf ~= false, -- default true for backward compat
+        isSelf = (type(rollData.isSelf) == "boolean" and rollData.isSelf)
+            or (rollData.winnerName == UnitName(PLAYER_UNIT) or rollData.winnerName == L["You"]),
         isCurrency = false,
         timestamp = GetTime(),
     }

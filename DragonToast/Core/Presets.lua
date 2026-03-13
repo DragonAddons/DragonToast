@@ -221,12 +221,14 @@ function ns.Presets.ApplyPreset(presetKey)
     local appearance = ns.Addon.db.profile.appearance
     for key, value in pairs(preset) do
         if key == "backgroundColor" then
-            if not appearance.backgroundColor then
-                appearance.backgroundColor = { r = value.r, g = value.g, b = value.b }
-            else
-                appearance.backgroundColor.r = value.r
-                appearance.backgroundColor.g = value.g
-                appearance.backgroundColor.b = value.b
+            if type(value) == "table" then
+                if type(appearance.backgroundColor) ~= "table" then
+                    appearance.backgroundColor = { r = value.r, g = value.g, b = value.b }
+                else
+                    appearance.backgroundColor.r = value.r
+                    appearance.backgroundColor.g = value.g
+                    appearance.backgroundColor.b = value.b
+                end
             end
         else
             appearance[key] = value
@@ -254,9 +256,10 @@ function ns.Presets.DetectPreset()
         for key, value in pairs(preset) do
             if key == "backgroundColor" then
                 local cur = appearance.backgroundColor
-                if not cur or math.abs(cur.r - value.r) > 0.01
-                    or math.abs(cur.g - value.g) > 0.01
-                    or math.abs(cur.b - value.b) > 0.01 then
+                if type(cur) ~= "table"
+                    or math.abs((cur.r or 0) - value.r) > 0.01
+                    or math.abs((cur.g or 0) - value.g) > 0.01
+                    or math.abs((cur.b or 0) - value.b) > 0.01 then
                     matches = false
                     break
                 end

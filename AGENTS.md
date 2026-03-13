@@ -271,8 +271,8 @@ Branch protection on `master`: PRs required, Luacheck status check required, bra
 
 ### Issues
 Create issues using the repo's issue templates (`.github/ISSUE_TEMPLATE/`):
-- **Bug reports**: Use `bug-report.yml` template. Title prefix: `[Bug]: `
-- **Feature requests**: Use `feature-request.yml` template. Title prefix: `[Feature]: `
+- **Bug reports**: Use `bug-report.yml` template. Title prefix: `[Bug]:`
+- **Feature requests**: Use `feature-request.yml` template. Title prefix: `[Feature]:`
 
 Create via CLI:
 ```bash

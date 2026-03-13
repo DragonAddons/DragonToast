@@ -114,6 +114,13 @@ local DIRECTION_TO_ANIMATION = {
     BOTTOM = "slideInUp",
 }
 
+local SIMPLE_MIGRATIONS = {
+    { version = 3, section = "display", key = "goldFormat", default = defaults.profile.display.goldFormat },
+    { version = 4, section = "filters", key = "showHonor", default = true },
+    { version = 5, section = "filters", key = "showMail", default = true },
+    { version = 6, section = "filters", key = "showReputation", default = true },
+}
+
 local function MigrateProfile(db)
     local profile = db.profile
     local animDefaults = defaults.profile.animation
@@ -164,12 +171,7 @@ local function MigrateProfile(db)
     end
 
     -- Simple single-field migrations (v3+)
-    local SIMPLE_MIGRATIONS = {
-        { version = 3, section = "display", key = "goldFormat", default = defaults.profile.display.goldFormat },
-        { version = 4, section = "filters", key = "showHonor", default = true },
-        { version = 5, section = "filters", key = "showMail", default = true },
-        { version = 6, section = "filters", key = "showReputation", default = true },
-    }
+    profile.schemaVersion = profile.schemaVersion or 0
 
     for _, migration in ipairs(SIMPLE_MIGRATIONS) do
         if profile.schemaVersion < migration.version then

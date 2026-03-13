@@ -5,7 +5,7 @@
 -- Supported versions: TBC Anniversary
 -------------------------------------------------------------------------------
 
-local ADDON_NAME, ns = ...
+local _, ns = ...
 
 -------------------------------------------------------------------------------
 -- Version guard: only run on TBC Anniversary
@@ -19,6 +19,8 @@ if WOW_PROJECT_ID ~= WOW_PROJECT_BURNING_CRUSADE_CLASSIC then return end
 -------------------------------------------------------------------------------
 -- Shared implementation
 -------------------------------------------------------------------------------
+
+if not ns.MailListenerShared or not ns.MailListenerShared.Create then return end
 
 ns.MailListener = ns.MailListenerShared.Create({
     versionName = "TBC",

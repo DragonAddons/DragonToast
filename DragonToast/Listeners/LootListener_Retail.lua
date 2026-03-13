@@ -20,6 +20,8 @@ if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then return end
 -- Shared implementation
 -------------------------------------------------------------------------------
 
+if not ns.LootListenerShared or not ns.LootListenerShared.Create then return end
+
 -- Retail keeps _SELF fallback strings without trailing periods.
 ns.LootListener = ns.LootListenerShared.Create({
     versionName = "Retail",

@@ -28,13 +28,14 @@ local L = ns.L
 -------------------------------------------------------------------------------
 
 local dtns
-local LSM = LibStub("LibSharedMedia-3.0")
+local LSM = LibStub("LibSharedMedia-3.0", true)
 
 -------------------------------------------------------------------------------
 -- Helpers
 -------------------------------------------------------------------------------
 
 local function BuildSoundValues()
+    if not LSM then return {} end
     local sounds = LSM:HashTable("sound")
     local values = {}
     for name in pairs(sounds) do

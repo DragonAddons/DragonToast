@@ -27,6 +27,10 @@ local string_format = string.format
 local type = type
 local L = ns.L
 
+local PLAYER_UNIT = "player"
+
+local owner
+
 -------------------------------------------------------------------------------
 -- Constants
 -------------------------------------------------------------------------------
@@ -38,7 +42,7 @@ local ATTACHMENTS_MAX = 12 -- ATTACHMENTS_MAX_RECEIVE in Blizzard code
 -------------------------------------------------------------------------------
 
 local function GetMailSourceLabel(index)
-    local _, _, _, isInvoice = GetInboxText(index)
+    local _, _, _, _, isInvoice = GetInboxText(index)
     if isInvoice then
         local invoiceType = GetInboxInvoiceInfo(index)
         if invoiceType == "buyer" then
@@ -83,7 +87,7 @@ local function SnapshotMoney(index, money, sourceLabel)
 end
 
 local function PassesFilter(lootData)
-    local db = ns.Addon.db.profile
+    local db = owner.db.profile
     if not db.enabled then return false end
     if not db.filters.showMail then return false end
 
@@ -114,7 +118,7 @@ local function BuildMailItemData(snapshot)
         itemSubType = itemSubType or "",
         itemIcon = itemTexture or Utils.QUESTION_MARK_ICON,
         quantity = snapshot.count,
-        looter = UnitName("player"),
+        looter = UnitName(PLAYER_UNIT),
         isSelf = true,
         isCurrency = snapshot.isCurrency or false,
         isMail = true,
@@ -134,7 +138,7 @@ local function BuildMailMoneyData(snapshot)
         itemIcon = Utils.GOLD_ICON,
         quantity = 1,
         copperAmount = snapshot.copperAmount,
-        looter = UnitName("player"),
+        looter = UnitName(PLAYER_UNIT),
         isSelf = true,
         isCurrency = true,
         isMail = true,
@@ -153,8 +157,10 @@ local function ProcessSnapshot(snapshot)
         return
     end
 
+    if snapshot.type ~= "item" then return end
+
     Utils.RetryWithTimer(
-        ns.Addon,
+        owner,
         function() return BuildMailItemData(snapshot) end,
         PassesFilter
     )
@@ -241,6 +247,8 @@ function ns.MailListenerShared.Create(config)
     end
 
     function listener.Initialize(addon)
+        owner = addon
+
         if not areHooksInstalled then
             hooksecurefunc("TakeInboxItem", OnTakeInboxItem)
             hooksecurefunc("TakeInboxMoney", OnTakeInboxMoney)
@@ -257,10 +265,10 @@ function ns.MailListenerShared.Create(config)
     end
 
     function listener.Shutdown()
-        ns.Addon:UnregisterEvent("MAIL_SHOW")
-        ns.Addon:UnregisterEvent("MAIL_CLOSED")
-        ns.Addon:UnregisterEvent("MAIL_SUCCESS")
-        ns.Addon:UnregisterEvent("MAIL_FAILED")
+        owner:UnregisterEvent("MAIL_SHOW")
+        owner:UnregisterEvent("MAIL_CLOSED")
+        owner:UnregisterEvent("MAIL_SUCCESS")
+        owner:UnregisterEvent("MAIL_FAILED")
 
         isMailboxOpen = false
         QueueUtils.Reset(pendingTakes)

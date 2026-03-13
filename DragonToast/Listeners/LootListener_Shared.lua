@@ -21,6 +21,10 @@ local ipairs = ipairs
 local tonumber = tonumber
 local type = type
 
+local PLAYER_UNIT = "player"
+
+local owner
+
 -------------------------------------------------------------------------------
 -- Default money patterns (shared across all version wrappers)
 -------------------------------------------------------------------------------
@@ -221,7 +225,7 @@ end
 -------------------------------------------------------------------------------
 
 local function PassesFilter(lootData)
-    local db = ns.Addon.db.profile
+    local db = owner.db.profile
     if not db.enabled then return false end
 
     if lootData.itemType == "Quest" and not db.filters.showQuestItems then
@@ -337,22 +341,22 @@ function ns.LootListenerShared.Create(config)
     local listener = {}
 
     local function OnChatMsgLoot(_, msg)
-        local playerName = UnitName("player") or UNKNOWN
+        local playerName = UnitName(PLAYER_UNIT) or UNKNOWN
         local itemLink, quantity, looter, isSelf = ParseLootMessage(msg, lootCategories, playerName)
         if not itemLink then return end
 
         Utils.RetryWithTimer(
-            ns.Addon,
+            owner,
             function() return BuildLootData(itemLink, quantity, looter or UNKNOWN, isSelf) end,
             PassesFilter
         )
     end
 
     local function OnChatMsgMoney(_, msg)
-        local db = ns.Addon.db.profile
+        local db = owner.db.profile
         if not db.enabled or not db.filters.showGold then return end
 
-        local playerName = UnitName("player") or UNKNOWN
+        local playerName = UnitName(PLAYER_UNIT) or UNKNOWN
         local amount, looter, isSelf = ParseMoneyMessage(msg, moneyPatterns, playerName)
         if not amount then return end
 
@@ -360,14 +364,15 @@ function ns.LootListenerShared.Create(config)
     end
 
     function listener.Initialize(addon)
+        owner = addon
         addon:RegisterEvent("CHAT_MSG_LOOT", OnChatMsgLoot)
         addon:RegisterEvent("CHAT_MSG_MONEY", OnChatMsgMoney)
         ns.DebugPrint(config.versionName .. " Loot Listener initialized")
     end
 
     function listener.Shutdown()
-        ns.Addon:UnregisterEvent("CHAT_MSG_LOOT")
-        ns.Addon:UnregisterEvent("CHAT_MSG_MONEY")
+        owner:UnregisterEvent("CHAT_MSG_LOOT")
+        owner:UnregisterEvent("CHAT_MSG_MONEY")
         ns.DebugPrint(config.versionName .. " Loot Listener shut down")
     end
 

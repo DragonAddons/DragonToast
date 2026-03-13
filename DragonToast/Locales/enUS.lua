@@ -189,6 +189,7 @@ L["Icon"] = true
 L["Icon Size"] = true
 L["Inset of the border from the toast edge"] = true
 L["Monochrome"] = true
+L["Monochrome Outline"] = true
 L["Opacity of the toast background"] = true
 L["Outline"] = true
 L["Outline style for text"] = true

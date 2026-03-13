@@ -31,6 +31,13 @@ function QueueUtils.Pop(queue)
     local item = queue[queue.first]
     queue[queue.first] = nil
     queue.first = queue.first + 1
+
+    -- Reset indices when queue drains to prevent unbounded growth
+    if queue.first > queue.last then
+        queue.first = 1
+        queue.last = 0
+    end
+
     return item
 end
 

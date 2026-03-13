@@ -169,9 +169,6 @@ local function CreateActionsSection(parent, yOffset, refreshAll)
         get = function() return "" end,
         set = function(value)
             db:CopyProfile(value)
-            if ns.RefreshVisibleWidgets then
-                ns.RefreshVisibleWidgets()
-            end
             refreshAll()
         end,
     })

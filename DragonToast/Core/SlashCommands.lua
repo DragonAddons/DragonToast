@@ -55,7 +55,7 @@ local function PrintStatus()
     print("  Minimap Icon: " .. (not db.minimap.hide and "Yes" or "No"))
     print("  Anchor: " .. db.display.anchorPoint
         .. " (" .. math.floor(db.display.anchorX) .. ", " .. math.floor(db.display.anchorY) .. ")")
-    local tmStatus = ns.TestToasts.IsTestModeActive()
+    local tmStatus = (ns.TestToasts and ns.TestToasts.IsTestModeActive())
         and ns.COLOR_GREEN .. "Active" or "Inactive"
     print("  Test Mode: " .. tmStatus .. ns.COLOR_RESET)
 end
@@ -132,13 +132,25 @@ function ns.HandleSlashCommand(input)
         ns.ToastManager.ToggleLock()
 
     elseif cmd == "test" then
+        if not ns.TestToasts then
+            ns.Print("TestToasts module is not loaded.")
+            return
+        end
         ns.TestToasts.ShowTestToast()
 
     elseif cmd:find("^test ") then
+        if not ns.TestToasts then
+            ns.Print("TestToasts module is not loaded.")
+            return
+        end
         local subCmd = cmd:match("^test (.+)$")
         ns.TestToasts.RunStackTest(subCmd)
 
     elseif cmd == "testmode" then
+        if not ns.TestToasts then
+            ns.Print("TestToasts module is not loaded.")
+            return
+        end
         ns.TestToasts.ToggleTestMode()
 
     elseif cmd == "clear" then

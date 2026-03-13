@@ -20,6 +20,8 @@ if WOW_PROJECT_ID ~= WOW_PROJECT_MISTS_CLASSIC then return end
 -- Shared implementation
 -------------------------------------------------------------------------------
 
+if not ns.MailListenerShared or not ns.MailListenerShared.Create then return end
+
 ns.MailListener = ns.MailListenerShared.Create({
     versionName = "Mists",
     supportsAttachmentCurrencyFlag = true,

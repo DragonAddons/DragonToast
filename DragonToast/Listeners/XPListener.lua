@@ -5,7 +5,7 @@
 -- Supported versions: TBC Anniversary, Retail, MoP Classic
 -------------------------------------------------------------------------------
 
-local ADDON_NAME, ns = ...
+local _, ns = ...
 local Utils = ns.ListenerUtils
 
 -------------------------------------------------------------------------------
@@ -20,7 +20,11 @@ local string_match = string.match
 local L = ns.L
 
 local PLAYER_UNIT = "player"
+-- English-only last resort. PATTERN_MAP handles localized clients via Blizzard
+-- global strings; this fallback only fires when all localized patterns miss.
 local XP_FALLBACK_PATTERN = "(%d+)%s+experience"
+
+local owner
 
 
 -------------------------------------------------------------------------------
@@ -98,7 +102,7 @@ end
 -------------------------------------------------------------------------------
 
 local function OnChatMsgCombatXPGain(_, text)
-    local db = ns.Addon.db.profile
+    local db = owner.db.profile
     if not db.enabled then return end
     if not db.filters.showXP then return end
 
@@ -132,12 +136,13 @@ end
 ns.XPListener = ns.XPListener or {}
 
 function ns.XPListener.Initialize(addon)
+    owner = addon
     InitPatterns()
     addon:RegisterEvent("CHAT_MSG_COMBAT_XP_GAIN", OnChatMsgCombatXPGain)
     ns.DebugPrint("XPListener initialized")
 end
 
 function ns.XPListener.Shutdown()
-    ns.Addon:UnregisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
+    owner:UnregisterEvent("CHAT_MSG_COMBAT_XP_GAIN")
     ns.DebugPrint("XPListener shutdown")
 end

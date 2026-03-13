@@ -23,6 +23,8 @@ local string_match = string.match
 local PLAYER_UNIT = "player"
 local HONOR_FALLBACK_PATTERN = "(%d+)%s+[Hh]onor"
 
+local owner
+
 -------------------------------------------------------------------------------
 -- Constants
 -------------------------------------------------------------------------------
@@ -110,7 +112,7 @@ function ns.CreateHonorListenerModule(config)
     end
 
     local function OnChatMsgCombatHonorGain(_, text)
-        local db = ns.Addon.db.profile
+        local db = owner.db.profile
         if not db.enabled then return end
         if not db.filters.showHonor then return end
 
@@ -122,13 +124,14 @@ function ns.CreateHonorListenerModule(config)
 
     return {
         Initialize = function(addon)
+            owner = addon
             honorIcon = ResolveHonorIcon()
             patterns = BuildPatterns()
             addon:RegisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN", OnChatMsgCombatHonorGain)
             ns.DebugPrint("HonorListener initialized")
         end,
         Shutdown = function()
-            ns.Addon:UnregisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN")
+            owner:UnregisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN")
             ns.DebugPrint("HonorListener shutdown")
         end,
         GetHonorIcon = function()

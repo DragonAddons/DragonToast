@@ -4,6 +4,7 @@ codes = true
 exclude_files = {
     "DragonToast/Libs/",
     ".release/",
+    ".types.lua",
 }
 
 ignore = {

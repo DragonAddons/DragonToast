@@ -57,7 +57,7 @@ local FONT_OUTLINE_VALUES = {
     { value = "", text = L["None"] },
     { value = "OUTLINE", text = L["Outline"] },
     { value = "THICKOUTLINE", text = L["Thick Outline"] },
-    { value = "MONOCHROME, OUTLINE", text = L["Monochrome"] },
+    { value = "MONOCHROME, OUTLINE", text = L["Monochrome Outline"] },
 }
 
 local function GetPresetValues()
@@ -72,7 +72,7 @@ end
 -- Section builders
 -------------------------------------------------------------------------------
 
-local function CreatePresetSection(parent, _, yOffset)
+local function CreatePresetSection(parent, yOffset)
     local W = ns.Widgets
     local header = W.CreateHeader(parent, L["Preset"])
     LC.AnchorWidget(header, parent, yOffset)

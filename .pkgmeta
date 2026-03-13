@@ -16,6 +16,8 @@ externals:
 ignore:
   - ".git*"
   - .luacheckrc
+  - .luarc.json
+  - .types.lua
   - .release
   - "*.md"
   - "*.png"

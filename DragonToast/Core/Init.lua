@@ -169,7 +169,7 @@ function Addon:OnEnable()
     end
 end
 
-function Addon.OnDisable(_)
+function Addon:OnDisable()
     -- Shutdown all listener modules
     for _, name in ipairs(LISTENER_MODULES) do
         local mod = ns[name]
@@ -182,7 +182,7 @@ function Addon.OnDisable(_)
     ns.ToastManager.ClearAll()
 end
 
-function Addon.OnSlashCommand(_, input)
+function Addon:OnSlashCommand(input)
     -- Routed to SlashCommands.lua
     if ns.HandleSlashCommand then
         ns.HandleSlashCommand(input)

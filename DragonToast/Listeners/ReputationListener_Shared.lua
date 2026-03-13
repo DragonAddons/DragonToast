@@ -21,6 +21,8 @@ local string_match = string.match
 
 local PLAYER_UNIT = "player"
 
+local owner
+
 -------------------------------------------------------------------------------
 -- Constants
 -------------------------------------------------------------------------------
@@ -121,7 +123,7 @@ function ns.CreateReputationListenerModule(config)
     local patterns = {}
 
     local function OnChatMsgCombatFactionChange(_, text)
-        local db = ns.Addon.db.profile
+        local db = owner.db.profile
         if not db.enabled then return end
         if not db.filters.showReputation then return end
 
@@ -134,12 +136,13 @@ function ns.CreateReputationListenerModule(config)
 
     return {
         Initialize = function(addon)
+            owner = addon
             patterns = BuildPatterns()
             addon:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE", OnChatMsgCombatFactionChange)
             ns.DebugPrint("ReputationListener initialized")
         end,
         Shutdown = function()
-            ns.Addon:UnregisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE")
+            owner:UnregisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE")
             ns.DebugPrint("ReputationListener shutdown")
         end,
         GetReputationIcon = function()

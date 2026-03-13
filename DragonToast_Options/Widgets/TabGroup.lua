@@ -134,7 +134,7 @@ function ns.Widgets.CreateTabGroup(parent, tabs)
     end
 
     -- SelectTab: switch to a tab, lazy-create content on first visit
-    function tabGroup.SelectTab(_, id)
+    function tabGroup:SelectTab(id)
         if selectedTab == id then return end
 
         -- Deselect previous
@@ -173,7 +173,7 @@ function ns.Widgets.CreateTabGroup(parent, tabs)
         contentFrames[id]:Show()
     end
 
-    function tabGroup.GetSelectedTab(_)
+    function tabGroup:GetSelectedTab()
         return selectedTab
     end
 
