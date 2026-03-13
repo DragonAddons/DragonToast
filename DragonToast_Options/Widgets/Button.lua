@@ -6,6 +6,7 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
+local WC = ns.WidgetConstants or {}
 
 -------------------------------------------------------------------------------
 -- Cached WoW API
@@ -19,15 +20,15 @@ local pcall = pcall
 -- Constants
 -------------------------------------------------------------------------------
 
-local FONT_PATH = "Fonts\\FRIZQT__.TTF"
+local FONT_PATH = WC.FONT_PATH or "Fonts\\FRIZQT__.TTF"
 local FONT_SIZE = 12
 local DEFAULT_WIDTH = 120
 local BUTTON_HEIGHT = 24
-local WHITE8x8 = "Interface\\Buttons\\WHITE8x8"
+local WHITE8x8 = WC.WHITE8x8 or "Interface\\Buttons\\WHITE8x8"
 local NORMAL_BG = { 0.15, 0.15, 0.15, 0.9 }
 local NORMAL_BORDER = { 0.4, 0.4, 0.4, 1 }
-local DISABLED_COLOR = { 0.5, 0.5, 0.5 }
-local WHITE_COLOR = { 1, 1, 1 }
+local DISABLED_COLOR = WC.DISABLED_COLOR or { 0.5, 0.5, 0.5 }
+local WHITE_COLOR = WC.WHITE_COLOR or { 1, 1, 1 }
 
 -------------------------------------------------------------------------------
 -- Tooltip handlers
@@ -40,7 +41,7 @@ local function OnEnter(self)
     GameTooltip:Show()
 end
 
-local function OnLeave()
+local function OnLeave(self)
     GameTooltip:Hide()
 end
 
@@ -94,6 +95,7 @@ function ns.Widgets.CreateButton(parent, opts)
         btn = CreateCustomButton(parent, width)
     else
         btn:SetSize(width, BUTTON_HEIGHT)
+        btn._text = btn:GetFontString()
     end
 
     btn:SetText(opts.text or "")
@@ -110,17 +112,17 @@ function ns.Widgets.CreateButton(parent, opts)
     btn:SetScript("OnLeave", OnLeave)
 
     -- SetDisabled
-    function btn:SetDisabled(state)
-        self._disabled = state
+    function btn.SetDisabled(_, state)
+        btn._disabled = state
         if state then
-            self:SetAlpha(0.5)
-            if self._text then
-                self._text:SetTextColor(DISABLED_COLOR[1], DISABLED_COLOR[2], DISABLED_COLOR[3])
+            btn:SetAlpha(0.5)
+            if btn._text then
+                btn._text:SetTextColor(DISABLED_COLOR[1], DISABLED_COLOR[2], DISABLED_COLOR[3])
             end
         else
-            self:SetAlpha(1)
-            if self._text then
-                self._text:SetTextColor(WHITE_COLOR[1], WHITE_COLOR[2], WHITE_COLOR[3])
+            btn:SetAlpha(1)
+            if btn._text then
+                btn._text:SetTextColor(WHITE_COLOR[1], WHITE_COLOR[2], WHITE_COLOR[3])
             end
         end
     end

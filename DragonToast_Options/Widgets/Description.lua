@@ -6,6 +6,7 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
+local WC = ns.WidgetConstants or {}
 
 -------------------------------------------------------------------------------
 -- Cached WoW API
@@ -17,9 +18,9 @@ local CreateFrame = CreateFrame
 -- Constants
 -------------------------------------------------------------------------------
 
-local FONT_PATH = "Fonts\\FRIZQT__.TTF"
+local FONT_PATH = WC.FONT_PATH or "Fonts\\FRIZQT__.TTF"
 local FONT_SIZE = 11
-local GRAY_COLOR = { 0.7, 0.7, 0.7 }
+local GRAY_COLOR = WC.GRAY_COLOR or { 0.7, 0.7, 0.7 }
 local PADDING_BOTTOM = 4
 local DEFAULT_HEIGHT = 20
 
@@ -58,9 +59,9 @@ function ns.Widgets.CreateDescription(parent, text)
     end)
 
     -- SetText method
-    function frame:SetText(newText)
+    function frame.SetText(_, newText)
         fontString:SetText(newText)
-        UpdateHeight(self)
+        UpdateHeight(frame)
     end
 
     -- Initial height calc (deferred one frame so width is resolved)

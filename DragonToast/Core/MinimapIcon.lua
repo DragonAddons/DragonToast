@@ -38,8 +38,8 @@ function ns.MinimapIcon.Initialize()
             if button == "LeftButton" then
                 if IsShiftKeyDown() then
                     -- Shift-left: test toast
-                    if ns.ToastManager.ShowTestToast then
-                        ns.ToastManager.ShowTestToast()
+                    if ns.TestToasts.ShowTestToast then
+                        ns.TestToasts.ShowTestToast()
                     end
                 else
                     -- Left-click: toggle config
@@ -74,10 +74,10 @@ function ns.MinimapIcon.Initialize()
             tooltip:AddLine("Status: " .. status)
             tooltip:AddLine(" ")
 
-            tooltip:AddLine(ns.COLOR_WHITE .. "Left-Click" .. ns.COLOR_RESET .. " — Open settings")
-            tooltip:AddLine(ns.COLOR_WHITE .. "Shift-Left-Click" .. ns.COLOR_RESET .. " — Test toast")
-            tooltip:AddLine(ns.COLOR_WHITE .. "Right-Click" .. ns.COLOR_RESET .. " — Toggle on/off")
-            tooltip:AddLine(ns.COLOR_WHITE .. "Middle-Click" .. ns.COLOR_RESET .. " — Toggle anchor lock")
+            tooltip:AddLine(ns.COLOR_WHITE .. "Left-Click" .. ns.COLOR_RESET .. " - Open settings")
+            tooltip:AddLine(ns.COLOR_WHITE .. "Shift-Left-Click" .. ns.COLOR_RESET .. " - Test toast")
+            tooltip:AddLine(ns.COLOR_WHITE .. "Right-Click" .. ns.COLOR_RESET .. " - Toggle on/off")
+            tooltip:AddLine(ns.COLOR_WHITE .. "Middle-Click" .. ns.COLOR_RESET .. " - Toggle anchor lock")
         end,
     })
 

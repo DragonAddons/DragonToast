@@ -26,7 +26,7 @@ local function DetectElvUI()
     if ElvUI and ElvUI[1] then
         E = ElvUI[1]
         elvuiDetected = true
-        ns.DebugPrint("ElvUI detected — skin matching available")
+        ns.DebugPrint("ElvUI detected - skin matching available")
         return true
     end
     elvuiDetected = false
@@ -62,7 +62,7 @@ function ns.ElvUISkin.SkinToast(frame)
 
     local db = ns.Addon.db.profile
 
-    -- Apply ElvUI font FACE only — respect user's sizes and outline from Appearance
+    -- Apply ElvUI font FACE only - respect user's sizes and outline from Appearance
     local font = ns.ElvUISkin.GetFont()
     if font then
         local fontSize = db.appearance.fontSize
@@ -78,7 +78,7 @@ function ns.ElvUISkin.SkinToast(frame)
     -- Background: respect user's Appearance settings (already applied by PopulateToast)
     -- Do NOT override with ElvUI backdrop color
 
-    -- Apply ElvUI border color (unless quality border is active — quality takes priority)
+    -- Apply ElvUI border color (unless quality border is active - quality takes priority)
     if not db.appearance.qualityBorder then
         local br, bg, bb, ba = ns.ElvUISkin.GetBorderColor()
         frame:SetBackdropBorderColor(br, bg, bb, ba)
@@ -94,6 +94,6 @@ function ns.ElvUISkin.Apply()
     DetectElvUI()
 
     if not elvuiDetected then
-        ns.DebugPrint("ElvUI not detected — using default skin")
+        ns.DebugPrint("ElvUI not detected - using default skin")
     end
 end
