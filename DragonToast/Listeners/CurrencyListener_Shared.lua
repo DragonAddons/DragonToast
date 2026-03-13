@@ -96,8 +96,9 @@ end
 -- Factory
 -------------------------------------------------------------------------------
 
-function ns.CreateCurrencyListenerModule(_)
+function ns.CurrencyListenerShared.Create()
     local patterns = BuildPatterns()
+    local listener = {}
 
     local function OnChatMsgCurrency(_, message)
         local db = ns.Addon.db.profile
@@ -115,14 +116,15 @@ function ns.CreateCurrencyListenerModule(_)
         end
     end
 
-    return {
-        Initialize = function(addon)
-            addon:RegisterEvent("CHAT_MSG_CURRENCY", OnChatMsgCurrency)
-            ns.DebugPrint("CurrencyListener initialized")
-        end,
-        Shutdown = function()
-            ns.Addon:UnregisterEvent("CHAT_MSG_CURRENCY")
-            ns.DebugPrint("CurrencyListener shutdown")
-        end,
-    }
+    function listener.Initialize(addon)
+        addon:RegisterEvent("CHAT_MSG_CURRENCY", OnChatMsgCurrency)
+        ns.DebugPrint("CurrencyListener initialized")
+    end
+
+    function listener.Shutdown()
+        ns.Addon:UnregisterEvent("CHAT_MSG_CURRENCY")
+        ns.DebugPrint("CurrencyListener shutdown")
+    end
+
+    return listener
 end

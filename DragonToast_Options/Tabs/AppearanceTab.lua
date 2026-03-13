@@ -333,7 +333,7 @@ local function CreateContent(parent)
     local db = dtns.Addon.db
     local yOffset = LC.PADDING_TOP
 
-    yOffset = CreatePresetSection(parent, db, yOffset)
+    yOffset = CreatePresetSection(parent, yOffset)
     yOffset = CreateFontSection(parent, db, yOffset)
     yOffset = CreateBackgroundSection(parent, db, yOffset)
     yOffset = CreateBorderSection(parent, db, yOffset)

@@ -23,7 +23,7 @@ local pcall = pcall
 local TITLE_BAR_HEIGHT = 28
 local BG_COLOR = { 0.08, 0.08, 0.08, 0.95 }
 local BORDER_COLOR = { 0.3, 0.3, 0.3, 1 }
-local WHITE8x8 = "Interface\\Buttons\\WHITE8x8"
+local WHITE8x8 = WC.WHITE8x8 or "Interface\\Buttons\\WHITE8x8"
 
 -------------------------------------------------------------------------------
 -- Title bar creation

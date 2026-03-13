@@ -98,7 +98,7 @@ end
 -- Factory
 -------------------------------------------------------------------------------
 
-function ns.CreateHonorListenerModule(config)
+function ns.HonorListenerShared.Create(config)
     config = config or {}
 
     local iconByFaction = config.iconByFaction or {}
@@ -122,20 +122,24 @@ function ns.CreateHonorListenerModule(config)
         ns.ToastManager.QueueToast(BuildHonorToast(honorAmount, victimName, honorIcon))
     end
 
-    return {
-        Initialize = function(addon)
-            owner = addon
-            honorIcon = ResolveHonorIcon()
-            patterns = BuildPatterns()
-            addon:RegisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN", OnChatMsgCombatHonorGain)
-            ns.DebugPrint("HonorListener initialized")
-        end,
-        Shutdown = function()
-            owner:UnregisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN")
-            ns.DebugPrint("HonorListener shutdown")
-        end,
-        GetHonorIcon = function()
-            return honorIcon or fallbackIcon
-        end,
-    }
+    local listener = {}
+
+    function listener.Initialize(addon)
+        owner = addon
+        honorIcon = ResolveHonorIcon()
+        patterns = BuildPatterns()
+        addon:RegisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN", OnChatMsgCombatHonorGain)
+        ns.DebugPrint("HonorListener initialized")
+    end
+
+    function listener.Shutdown()
+        owner:UnregisterEvent("CHAT_MSG_COMBAT_HONOR_GAIN")
+        ns.DebugPrint("HonorListener shutdown")
+    end
+
+    function listener.GetHonorIcon()
+        return honorIcon or fallbackIcon
+    end
+
+    return listener
 end

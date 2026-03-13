@@ -16,24 +16,15 @@ local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
 
 if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then return end
 
-local CreateHonorListenerModule = ns.CreateHonorListenerModule
+if not ns.HonorListenerShared or not ns.HonorListenerShared.Create then return end
 
 local RETAIL_ALLIANCE_HONOR_ICON = 463450
 local RETAIL_HORDE_HONOR_ICON = 463451
 
-if not CreateHonorListenerModule then
-    error("HonorListener shared implementation must load before Retail wrapper")
-end
-
-local listener = CreateHonorListenerModule({
+ns.HonorListener = ns.HonorListenerShared.Create({
     iconByFaction = {
         Alliance = RETAIL_ALLIANCE_HONOR_ICON,
         Horde = RETAIL_HORDE_HONOR_ICON,
     },
     iconFallback = RETAIL_ALLIANCE_HONOR_ICON,
 })
-
-ns.HonorListener = ns.HonorListener or {}
-ns.HonorListener.Initialize = listener.Initialize
-ns.HonorListener.Shutdown = listener.Shutdown
-ns.HonorListener.GetHonorIcon = listener.GetHonorIcon

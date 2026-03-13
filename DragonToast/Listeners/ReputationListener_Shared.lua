@@ -116,7 +116,7 @@ end
 -- Factory
 -------------------------------------------------------------------------------
 
-function ns.CreateReputationListenerModule(config)
+function ns.ReputationListenerShared.Create(config)
     config = config or {}
 
     local reputationIcon = config.icon or REPUTATION_ICON_FALLBACK
@@ -134,19 +134,23 @@ function ns.CreateReputationListenerModule(config)
         ns.ToastManager.QueueToast(BuildReputationToast(reputationAmount, factionName, reputationIcon))
     end
 
-    return {
-        Initialize = function(addon)
-            owner = addon
-            patterns = BuildPatterns()
-            addon:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE", OnChatMsgCombatFactionChange)
-            ns.DebugPrint("ReputationListener initialized")
-        end,
-        Shutdown = function()
-            owner:UnregisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE")
-            ns.DebugPrint("ReputationListener shutdown")
-        end,
-        GetReputationIcon = function()
-            return reputationIcon
-        end,
-    }
+    local listener = {}
+
+    function listener.Initialize(addon)
+        owner = addon
+        patterns = BuildPatterns()
+        addon:RegisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE", OnChatMsgCombatFactionChange)
+        ns.DebugPrint("ReputationListener initialized")
+    end
+
+    function listener.Shutdown()
+        owner:UnregisterEvent("CHAT_MSG_COMBAT_FACTION_CHANGE")
+        ns.DebugPrint("ReputationListener shutdown")
+    end
+
+    function listener.GetReputationIcon()
+        return reputationIcon
+    end
+
+    return listener
 end

@@ -167,63 +167,47 @@ local function GetTestItems()
     return testItems
 end
 
-function ns.TestToasts.ShowTestToast()
-    testCounter = testCounter + 1
-
-    local items = GetTestItems()
-    local test = items[math_random(#items)]
-
-    local lootData
+local function BuildTestLootData(test)
     if test.isXP then
         local amount = test.xpAmount + math_random(0, 500)
-        lootData = CreateProgressionTestLootData(
-            "isXP",
-            "xpAmount",
-            amount,
-            L["+%s XP"],
-            test.icon,
-            "mobName",
+        local lootData = CreateProgressionTestLootData(
+            "isXP", "xpAmount", amount, L["+%s XP"],
+            test.icon, "mobName",
             (math_random(2) == 1) and "Test Creature" or nil
         )
         lootData.itemQuality = test.quality
+        return lootData
     elseif test.isHonor then
         local amount = test.honorAmount + math_random(0, 100)
-        lootData = CreateProgressionTestLootData(
-            "isHonor",
-            "honorAmount",
-            amount,
-            L["+%s Honor"],
-            test.icon,
-            "victimName",
-            test.victimName
+        local lootData = CreateProgressionTestLootData(
+            "isHonor", "honorAmount", amount, L["+%s Honor"],
+            test.icon, "victimName", test.victimName
         )
         lootData.itemQuality = test.quality
+        return lootData
     elseif test.isReputation then
         local amount = test.reputationAmount + math_random(0, 200)
-        lootData = CreateProgressionTestLootData(
-            "isReputation",
-            "reputationAmount",
-            amount,
-            L["+%s Reputation"],
-            test.icon,
-            "factionName",
-            test.factionName
+        local lootData = CreateProgressionTestLootData(
+            "isReputation", "reputationAmount", amount, L["+%s Reputation"],
+            test.icon, "factionName", test.factionName
         )
         lootData.itemQuality = test.quality
+        return lootData
     elseif test.isMoney then
-        lootData = CreateMoneyTestLootData(
-            test.copperAmount,
-            test.quality,
-            test.level,
-            test.type,
-            test.subType,
-            test.icon
+        return CreateMoneyTestLootData(
+            test.copperAmount, test.quality, test.level,
+            test.type, test.subType, test.icon
         )
     else
-        lootData = CreateItemTestLootData(test, math_random(1, 3))
+        return CreateItemTestLootData(test, math_random(1, 3))
     end
+end
 
-    ns.ToastManager.ShowToast(lootData)
+function ns.TestToasts.ShowTestToast()
+    testCounter = testCounter + 1
+    local items = GetTestItems()
+    local test = items[math_random(#items)]
+    ns.ToastManager.ShowToast(BuildTestLootData(test))
 end
 
 -------------------------------------------------------------------------------
@@ -245,7 +229,7 @@ function ns.TestToasts.StartTestMode()
         ns.TestToasts.ShowTestToast()
     end, TEST_MODE_INTERVAL)
 
-    ns.Print("Test mode " .. ns.COLOR_GREEN .. "started" .. ns.COLOR_RESET .. " — toasts will keep appearing.")
+    ns.Print("Test mode " .. ns.COLOR_GREEN .. "started" .. ns.COLOR_RESET .. " - toasts will keep appearing.")
 end
 
 function ns.TestToasts.StopTestMode()
@@ -269,89 +253,93 @@ end
 -- Stack Test Commands (in-game verification)
 -------------------------------------------------------------------------------
 
-function ns.TestToasts.RunStackTest(testType)
-    local addon = ns.Addon
+local function MakeStackTestItemData()
+    return CreateTestLootData({
+        itemLink = "|cffa335ee|Hitem:32837::::::::70::::::|h[Warglaive of Azzinoth]|h|r",
+        itemID = 32837,
+        itemName = "Warglaive of Azzinoth",
+        itemQuality = 5,
+        itemLevel = 156,
+        itemType = "Weapon",
+        itemSubType = "Sword",
+        itemIcon = 135562,
+    })
+end
+
+local function MakeStackTestXPData()
+    return CreateProgressionTestLootData("isXP", "xpAmount", 500, L["+%s XP"], 894556)
+end
+
+local function MakeStackTestGoldData()
+    return CreateMoneyTestLootData(50000, 1, 0, "Currency", "Gold", 133784)
+end
+
+local function MakeStackTestHonorData()
+    return CreateProgressionTestLootData(
+        "isHonor", "honorAmount", 100, L["+%s Honor"],
+        GetHonorIcon(), "victimName", "Enemy Player"
+    )
+end
+
+local function MakeStackTestReputationData()
+    return CreateProgressionTestLootData(
+        "isReputation", "reputationAmount", 250, L["+%s Reputation"],
+        GetReputationIcon(), "factionName", "The Sha'tar"
+    )
+end
+
+local function FireStackToast(lootData, delay)
     local ShowToast = ns.ToastManager.ShowToast
-
-    local function FireToast(lootData, delay)
-        if delay and delay > 0 then
-            addon:ScheduleTimer(function() ShowToast(lootData) end, delay)
-        else
-            ShowToast(lootData)
-        end
-    end
-
-    local function MakeItemData()
-        return CreateTestLootData({
-            itemLink = "|cffa335ee|Hitem:32837::::::::70::::::|h[Warglaive of Azzinoth]|h|r",
-            itemID = 32837,
-            itemName = "Warglaive of Azzinoth",
-            itemQuality = 5,
-            itemLevel = 156,
-            itemType = "Weapon",
-            itemSubType = "Sword",
-            itemIcon = 135562,
-        })
-    end
-
-    local function MakeXPData()
-        return CreateProgressionTestLootData("isXP", "xpAmount", 500, L["+%s XP"], 894556)
-    end
-
-    local function MakeGoldData()
-        return CreateMoneyTestLootData(50000, 1, 0, "Currency", "Gold", 133784)
-    end
-
-    local function MakeHonorData()
-        return CreateProgressionTestLootData(
-            "isHonor",
-            "honorAmount",
-            100,
-            L["+%s Honor"],
-            GetHonorIcon(),
-            "victimName",
-            "Enemy Player"
-        )
-    end
-
-    local function MakeReputationData()
-        return CreateProgressionTestLootData(
-            "isReputation",
-            "reputationAmount",
-            250,
-            L["+%s Reputation"],
-            GetReputationIcon(),
-            "factionName",
-            "The Sha'tar"
-        )
-    end
-
-    local function RunGroup(label, makeFunc)
-        ns.Print("[Stack Test] Testing " .. ns.COLOR_WHITE .. label .. ns.COLOR_RESET .. " stacking...")
-        FireToast(makeFunc(), 0)
-        FireToast(makeFunc(), STACK_TEST_SECOND_DELAY)
-        FireToast(makeFunc(), STACK_TEST_THIRD_DELAY)
-    end
-
-    if testType == "item" or testType == "stack" then
-        RunGroup("item", MakeItemData)
-    elseif testType == "xp" then
-        RunGroup("XP", MakeXPData)
-    elseif testType == "gold" then
-        RunGroup("gold", MakeGoldData)
-    elseif testType == "honor" then
-        RunGroup("honor", MakeHonorData)
-    elseif testType == "reputation" or testType == "rep" then
-        RunGroup("reputation", MakeReputationData)
-    elseif testType == "all" then
-        RunGroup("item", MakeItemData)
-        addon:ScheduleTimer(function() RunGroup("XP", MakeXPData) end, STACK_TEST_XP_DELAY)
-        addon:ScheduleTimer(function() RunGroup("gold", MakeGoldData) end, STACK_TEST_GOLD_DELAY)
-        addon:ScheduleTimer(function() RunGroup("honor", MakeHonorData) end, STACK_TEST_HONOR_DELAY)
-        addon:ScheduleTimer(function() RunGroup("reputation", MakeReputationData) end, STACK_TEST_REPUTATION_DELAY)
+    if delay and delay > 0 then
+        ns.Addon:ScheduleTimer(function() ShowToast(lootData) end, delay)
     else
+        ShowToast(lootData)
+    end
+end
+
+local function RunStackGroup(label, makeFunc)
+    ns.Print("[Stack Test] Testing " .. ns.COLOR_WHITE .. label .. ns.COLOR_RESET .. " stacking...")
+    FireStackToast(makeFunc(), 0)
+    FireStackToast(makeFunc(), STACK_TEST_SECOND_DELAY)
+    FireStackToast(makeFunc(), STACK_TEST_THIRD_DELAY)
+end
+
+local STACK_TEST_DISPATCH = {
+    item  = { label = "item",       make = MakeStackTestItemData },
+    stack = { label = "item",       make = MakeStackTestItemData },
+    xp    = { label = "XP",         make = MakeStackTestXPData },
+    gold  = { label = "gold",       make = MakeStackTestGoldData },
+    honor = { label = "honor",      make = MakeStackTestHonorData },
+    rep   = { label = "reputation", make = MakeStackTestReputationData },
+    reputation = { label = "reputation", make = MakeStackTestReputationData },
+}
+
+local STACK_TEST_ALL_GROUPS = {
+    { label = "item",       make = MakeStackTestItemData,       delay = 0 },
+    { label = "XP",         make = MakeStackTestXPData,         delay = STACK_TEST_XP_DELAY },
+    { label = "gold",       make = MakeStackTestGoldData,       delay = STACK_TEST_GOLD_DELAY },
+    { label = "honor",      make = MakeStackTestHonorData,      delay = STACK_TEST_HONOR_DELAY },
+    { label = "reputation", make = MakeStackTestReputationData, delay = STACK_TEST_REPUTATION_DELAY },
+}
+
+function ns.TestToasts.RunStackTest(testType)
+    if testType == "all" then
+        for _, group in ipairs(STACK_TEST_ALL_GROUPS) do
+            if group.delay > 0 then
+                ns.Addon:ScheduleTimer(function() RunStackGroup(group.label, group.make) end, group.delay)
+            else
+                RunStackGroup(group.label, group.make)
+            end
+        end
+        return
+    end
+
+    local entry = STACK_TEST_DISPATCH[testType]
+    if not entry then
         ns.Print("Unknown test type: " .. ns.COLOR_WHITE .. (testType or "nil") .. ns.COLOR_RESET)
         ns.Print("Usage: /dt test [stack|xp|gold|honor|reputation|all]")
         return
     end
+
+    RunStackGroup(entry.label, entry.make)
 end

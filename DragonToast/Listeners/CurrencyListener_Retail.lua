@@ -16,14 +16,6 @@ local WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE
 
 if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then return end
 
-local CreateCurrencyListenerModule = ns.CreateCurrencyListenerModule
+if not ns.CurrencyListenerShared or not ns.CurrencyListenerShared.Create then return end
 
-if not CreateCurrencyListenerModule then
-    error("CurrencyListener shared implementation must load before Retail wrapper")
-end
-
-local listener = CreateCurrencyListenerModule()
-
-ns.CurrencyListener = ns.CurrencyListener or {}
-ns.CurrencyListener.Initialize = listener.Initialize
-ns.CurrencyListener.Shutdown = listener.Shutdown
+ns.CurrencyListener = ns.CurrencyListenerShared.Create()
