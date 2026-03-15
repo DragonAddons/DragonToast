@@ -14,6 +14,8 @@ local ADDON_NAME, ns = ...
 local lib = LibStub("LibAnimate")
 ns.LibAnimate = lib
 
+local GetTime = GetTime
+
 local IDENTITY_ANIMATION_DURATION = 1
 local DEFAULT_SLIDE_SPEED = 0.2
 
@@ -142,8 +144,10 @@ function ns.ToastAnimations.PlayLifecycle(frame, lootData)
         frame:Show()
         frame:SetAlpha(1)
         frame._phase = "hold"
+        frame._holdStartTime = GetTime()
         frame._noAnimTimer = ns.Addon:ScheduleTimer(function()
             frame._noAnimTimer = nil
+            frame._holdStartTime = nil
             frame._phase = nil
             OnToastFinished(frame)
         end, db.animation.holdDuration)
@@ -224,6 +228,8 @@ function ns.ToastAnimations.StopAll(frame)
     frame._isExiting = false
     frame._isEntering = false
     frame._phase = nil
+    frame._holdStartTime = nil
+    frame._holdRemaining = nil
 
     if frame._noAnimTimer then
         ns.Addon:CancelTimer(frame._noAnimTimer)
