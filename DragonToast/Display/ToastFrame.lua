@@ -34,6 +34,7 @@ local DEFAULT_SECONDARY_FONT_SIZE = 10
 local DEFAULT_FRAME_WIDTH = 350
 local DEFAULT_FRAME_HEIGHT = 48
 local BASE_FRAME_LEVEL = 100
+local HOVERED_FRAME_STRATA = "HIGH"
 local FRAME_BORDER_OFFSET = 1
 local ICON_FRAME_BORDER_EXTRA = 2
 local ICON_FRAME_INSET = 4
@@ -389,14 +390,13 @@ end
 
 local function PauseNoAnimTimer(frame)
     if not frame._noAnimTimer then return end
-    if not frame._holdStartTime then return end
+    if not frame._holdEndTime then return end
 
-    local elapsed = GetTime() - frame._holdStartTime
-    local holdDuration = ns.Addon.db.profile.animation.holdDuration
-    frame._holdRemaining = holdDuration - elapsed
+    frame._holdRemaining = frame._holdEndTime - GetTime()
     if frame._holdRemaining < 0 then
         frame._holdRemaining = 0
     end
+    frame._holdEndTime = nil
 
     ns.Addon:CancelTimer(frame._noAnimTimer)
     frame._noAnimTimer = nil
@@ -408,11 +408,11 @@ local function ResumeNoAnimTimer(frame)
 
     local remaining = frame._holdRemaining
     frame._holdRemaining = nil
-    frame._holdStartTime = GetTime()
+    frame._holdEndTime = GetTime() + remaining
 
     frame._noAnimTimer = ns.Addon:ScheduleTimer(function()
         frame._noAnimTimer = nil
-        frame._holdStartTime = nil
+        frame._holdEndTime = nil
         frame._phase = nil
         ns.ToastManager.OnToastFinished(frame)
     end, remaining)
@@ -442,29 +442,41 @@ local function SetupToastScripts(frame)
 
         local db = ns.Addon.db
         if not db or not db.profile.animation.pauseOnHover then return end
-        if self._phase == nil or self._isExiting or self._isEntering then return end
+        if self._phase == nil or self._phase == "entrance" then return end
 
         self._isHovered = true
+        self._savedStrata = self:GetFrameStrata()
+        self:SetFrameStrata(HOVERED_FRAME_STRATA)
+
         if not db.profile.animation.enableAnimations then
             PauseNoAnimTimer(self)
         else
-            -- Snap any in-progress LibAnimate slide to its current
-            -- interpolated position so the toast stops moving immediately.
             local libAnim = ns.LibAnimate
-            if libAnim and libAnim.activeAnimations then
-                local state = libAnim.activeAnimations[self]
-                if state and state.slideStartTime then
-                    local slideElapsed = GetTime() - state.slideStartTime
-                    local slideProgress = math.min(slideElapsed / state.slideDuration, 1.0)
-                    state.anchorX = state.slideFromX + (state.slideToX - state.slideFromX) * slideProgress
-                    state.anchorY = state.slideFromY + (state.slideToY - state.slideFromY) * slideProgress
-                    state.slideStartTime = nil
-                    state.slideDuration = nil
-                    state.slideFromX = nil
-                    state.slideFromY = nil
-                    state.slideToX = nil
-                    state.slideToY = nil
-                    state.slideElapsedAtPause = nil
+            if libAnim then
+                if self._isExiting then
+                    libAnim:PauseQueue(self)
+                elseif libAnim.activeAnimations then
+                    -- Freeze in-progress slide at its current interpolated position.
+                    -- Accesses LibAnimate internals (tested against LibAnimate r20250315).
+                    -- Guard all required fields so we degrade gracefully if internals change.
+                    local state = libAnim.activeAnimations[self]
+                    if state and state.slideStartTime and state.slideDuration
+                        and state.slideFromX and state.slideFromY
+                        and state.slideToX and state.slideToY then
+                        local slideElapsed = GetTime() - state.slideStartTime
+                        local slideProgress = math.min(slideElapsed / state.slideDuration, 1.0)
+                        state.anchorX = state.slideFromX
+                            + (state.slideToX - state.slideFromX) * slideProgress
+                        state.anchorY = state.slideFromY
+                            + (state.slideToY - state.slideFromY) * slideProgress
+                        state.slideStartTime = nil
+                        state.slideDuration = nil
+                        state.slideFromX = nil
+                        state.slideFromY = nil
+                        state.slideToX = nil
+                        state.slideToY = nil
+                        state.slideElapsedAtPause = nil
+                    end
                 end
             end
         end
@@ -476,13 +488,31 @@ local function SetupToastScripts(frame)
         if not self._isHovered then return end
         self._isHovered = false
 
-        local db = ns.Addon.db
-        if not db or not db.profile.animation.pauseOnHover then return end
+        if self._savedStrata then
+            self:SetFrameStrata(self._savedStrata)
+            self._savedStrata = nil
+        end
 
-        if db.profile.animation.enableAnimations then
-            ns.ToastAnimations.ResumeFromHoverHold(self)
+        local resumed = false
+        if ns.Addon.db and ns.Addon.db.profile.animation.enableAnimations then
+            local libAnim = ns.LibAnimate
+            if libAnim then
+                if self._isExiting then
+                    libAnim:ResumeQueue(self)
+                    resumed = true
+                elseif ns.ToastAnimations.ResumeFromHoverHold then
+                    resumed = ns.ToastAnimations.ResumeFromHoverHold(self)
+                end
+            end
         else
-            ResumeNoAnimTimer(self)
+            if self._holdRemaining ~= nil then
+                ResumeNoAnimTimer(self)
+                resumed = true
+            end
+        end
+
+        if not resumed then
+            ns.ToastManager.OnToastFinished(self)
         end
     end)
 end
@@ -690,9 +720,10 @@ function ns.ToastFrame.Release(frame)
     frame:ClearAllPoints()
     frame.lootData = nil
     frame._noAnimTimer = nil
-    frame._holdStartTime = nil
+    frame._holdEndTime = nil
     frame._holdRemaining = nil
     frame._isHovered = false
+    frame._savedStrata = nil
     frame._hoverHoldCallback = nil
     frame._backdropKey = nil
     frame._borderKey = nil

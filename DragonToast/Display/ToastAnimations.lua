@@ -163,10 +163,10 @@ function ns.ToastAnimations.PlayLifecycle(frame, lootData)
         frame:Show()
         frame:SetAlpha(1)
         frame._phase = "hold"
-        frame._holdStartTime = GetTime()
+        frame._holdEndTime = GetTime() + db.animation.holdDuration
         frame._noAnimTimer = ns.Addon:ScheduleTimer(function()
             frame._noAnimTimer = nil
-            frame._holdStartTime = nil
+            frame._holdEndTime = nil
             frame._phase = nil
             OnToastFinished(frame)
         end, db.animation.holdDuration)
@@ -183,7 +183,7 @@ end
 
 function ns.ToastAnimations.ResumeFromHoverHold(frame)
     local callback = frame._hoverHoldCallback
-    if not callback then return end
+    if not callback then return false end
     frame._hoverHoldCallback = nil
 
     local db = ns.Addon.db.profile
@@ -192,6 +192,7 @@ function ns.ToastAnimations.ResumeFromHoverHold(frame)
     RestoreLogicalAnchor(frame)
     frame._anchorY = frame._targetY
     PlayExit(frame, db, callback)
+    return true
 end
 
 -------------------------------------------------------------------------------
@@ -271,7 +272,7 @@ function ns.ToastAnimations.StopAll(frame)
     frame._isExiting = false
     frame._isEntering = false
     frame._phase = nil
-    frame._holdStartTime = nil
+    frame._holdEndTime = nil
     frame._holdRemaining = nil
     frame._hoverHoldCallback = nil
 
