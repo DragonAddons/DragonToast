@@ -339,8 +339,17 @@ local function ShowToast(lootData)
     local toast = ns.ToastFrame.Acquire()
     ns.ToastFrame.Populate(toast, lootData)
 
-    -- Insert at position 1 (newest on top/bottom)
-    table.insert(activeToasts, 1, toast)
+    -- Insert newest toast at position 1, but after any hovered toasts
+    -- so frozen toasts keep their index and physical position.
+    local insertAt = 1
+    for i, t in ipairs(activeToasts) do
+        if t._isHovered then
+            insertAt = i + 1
+        else
+            break
+        end
+    end
+    table.insert(activeToasts, insertAt, toast)
 
     -- Position all toasts
     ns.ToastManager.UpdatePositions()
