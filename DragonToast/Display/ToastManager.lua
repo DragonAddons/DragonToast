@@ -227,9 +227,12 @@ function ns.ToastManager.UpdatePositions()
                     -- Store anchor args so the onFinished callback can issue the catch-up slide.
                     toast._targetY = y
                     toast._deferredSlideArgs = { point, relativeTo, relativePoint, x }
+                elseif toast._isHovered then
+                    -- Hovered: record desired position but don't move.
+                    -- _anchorY stays at the frozen position so resume can
+                    -- slide from there.
+                    toast._targetY = y
                 else
-                    -- Normal slide: use logical anchor instead of GetPoint() which
-                    -- returns the animated position, not the base position.
                     local currentY = toast._anchorY
                     local startY = currentY or toast._targetY or y
                     toast._targetY = y

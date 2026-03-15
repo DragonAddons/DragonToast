@@ -188,6 +188,7 @@ function ns.ToastAnimations.ResumeFromHoverHold(frame)
     local db = ns.Addon.db.profile
     lib:Stop(frame)
     RestoreLogicalAnchor(frame)
+    frame._anchorY = frame._targetY
     PlayExit(frame, db, callback)
 end
 
@@ -207,8 +208,13 @@ end
 -------------------------------------------------------------------------------
 
 function ns.ToastAnimations.PlaySlide(frame, _, toY, point, relativeTo,
-                                       relativePoint, x)
+                                        relativePoint, x)
     if frame._isExiting then return end
+
+    -- Hovered toasts are frozen in place. _targetY is already updated by
+    -- the caller (UpdatePositions) so the correct position is known when
+    -- the hover ends.
+    if frame._isHovered then return end
 
     local db = ns.Addon.db.profile
 
