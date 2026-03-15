@@ -393,9 +393,8 @@ local function PauseNoAnimTimer(frame)
     if not frame._holdStartTime then return end
 
     local elapsed = GetTime() - frame._holdStartTime
-    local basis = frame._holdRemaining
-        or ns.Addon.db.profile.animation.holdDuration
-    frame._holdRemaining = basis - elapsed
+    local holdDuration = ns.Addon.db.profile.animation.holdDuration
+    frame._holdRemaining = holdDuration - elapsed
     if frame._holdRemaining < 0 then
         frame._holdRemaining = 0
     end
@@ -408,15 +407,16 @@ local function ResumeNoAnimTimer(frame)
     if frame._holdRemaining == nil then return end
     if frame._noAnimTimer then return end
 
+    local remaining = frame._holdRemaining
+    frame._holdRemaining = nil
     frame._holdStartTime = GetTime()
 
     frame._noAnimTimer = ns.Addon:ScheduleTimer(function()
         frame._noAnimTimer = nil
         frame._holdStartTime = nil
-        frame._holdRemaining = nil
         frame._phase = nil
         ns.ToastManager.OnToastFinished(frame)
-    end, frame._holdRemaining)
+    end, remaining)
 end
 
 --- Wire up click, enter, and leave scripts on the root Button frame
@@ -443,35 +443,29 @@ local function SetupToastScripts(frame)
 
         local db = ns.Addon.db
         if not db or not db.profile.animation.pauseOnHover then return end
-        if self._phase == nil or self._phase == "entrance" then return end
+        if self._phase == nil or self._isExiting or self._isEntering then return end
 
         self._isHovered = true
-        self._savedStrata = self:GetFrameStrata()
-        self:SetFrameStrata(HOVERED_FRAME_STRATA)
         if not db.profile.animation.enableAnimations then
             PauseNoAnimTimer(self)
         else
+            -- Snap any in-progress LibAnimate slide to its current
+            -- interpolated position so the toast stops moving immediately.
             local libAnim = ns.LibAnimate
-            if libAnim then
-                if self._isExiting then
-                    libAnim:PauseQueue(self)
-                elseif libAnim.activeAnimations then
-                    local state = libAnim.activeAnimations[self]
-                    if state and state.slideStartTime then
-                        local slideElapsed = GetTime() - state.slideStartTime
-                        local slideProgress = math.min(slideElapsed / state.slideDuration, 1.0)
-                        state.anchorX = state.slideFromX
-                            + (state.slideToX - state.slideFromX) * slideProgress
-                        state.anchorY = state.slideFromY
-                            + (state.slideToY - state.slideFromY) * slideProgress
-                        state.slideStartTime = nil
-                        state.slideDuration = nil
-                        state.slideFromX = nil
-                        state.slideFromY = nil
-                        state.slideToX = nil
-                        state.slideToY = nil
-                        state.slideElapsedAtPause = nil
-                    end
+            if libAnim and libAnim.activeAnimations then
+                local state = libAnim.activeAnimations[self]
+                if state and state.slideStartTime then
+                    local slideElapsed = GetTime() - state.slideStartTime
+                    local slideProgress = math.min(slideElapsed / state.slideDuration, 1.0)
+                    state.anchorX = state.slideFromX + (state.slideToX - state.slideFromX) * slideProgress
+                    state.anchorY = state.slideFromY + (state.slideToY - state.slideFromY) * slideProgress
+                    state.slideStartTime = nil
+                    state.slideDuration = nil
+                    state.slideFromX = nil
+                    state.slideFromY = nil
+                    state.slideToX = nil
+                    state.slideToY = nil
+                    state.slideElapsedAtPause = nil
                 end
             end
         end
@@ -482,20 +476,12 @@ local function SetupToastScripts(frame)
 
         if not self._isHovered then return end
         self._isHovered = false
-        if self._savedStrata then
-            self:SetFrameStrata(self._savedStrata)
-            self._savedStrata = nil
-        end
 
-        if ns.Addon.db and ns.Addon.db.profile.animation.enableAnimations then
-            if self._isExiting then
-                local libAnim = ns.LibAnimate
-                if libAnim then
-                    libAnim:ResumeQueue(self)
-                end
-            else
-                ns.ToastAnimations.ResumeFromHoverHold(self)
-            end
+        local db = ns.Addon.db
+        if not db or not db.profile.animation.pauseOnHover then return end
+
+        if db.profile.animation.enableAnimations then
+            ns.ToastAnimations.ResumeFromHoverHold(self)
         else
             ResumeNoAnimTimer(self)
         end
@@ -709,10 +695,6 @@ function ns.ToastFrame.Release(frame)
     frame._holdRemaining = nil
     frame._isHovered = false
     frame._hoverHoldCallback = nil
-    if frame._savedStrata then
-        frame:SetFrameStrata(frame._savedStrata)
-        frame._savedStrata = nil
-    end
     frame._backdropKey = nil
     frame._borderKey = nil
     frame._iconBackdropKey = nil
