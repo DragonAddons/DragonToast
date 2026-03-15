@@ -4,7 +4,7 @@ Project-specific guidelines for DragonToast. See the parent `../AGENTS.md` for g
 
 DragonToast is an animated loot feed addon for World of Warcraft. It shows a stacking feed of toast notifications when items are looted, with smooth animations and ElvUI skin matching.
 
-**GitHub**: <https://github.com/DragonAddons/DragonToast>
+**GitHub**: <https://github.com/Xerrion/DragonToast>
 
 ---
 
@@ -308,7 +308,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/):
 
 ### Project Boards
 
-DragonToast uses the [DragonToast/Bug Tracker](https://github.com/orgs/DragonAddons/projects/2) project board (org project #2) for issue tracking.
+DragonToast uses the [DragonToast/Bug Tracker](https://github.com/orgs/Xerrion/projects/2) project board (org project #2) for issue tracking.
 
 Board columns: **To triage** | **Backlog** | **Ready** | **In progress** | **In review** | **Done**
 

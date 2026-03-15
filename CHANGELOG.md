@@ -1,24 +1,24 @@
-## [1.8.2](https://github.com/DragonAddons/DragonToast/compare/1.8.1...1.8.2) (2026-02-25)
+## [1.8.2](https://github.com/Xerrion/DragonToast/compare/1.8.1...1.8.2) (2026-02-25)
 
 ### ⚙️ Miscellaneous Tasks
 
-* fix changelog list items ([#65](https://github.com/DragonAddons/DragonToast/issues/65)) ([1c399f4](https://github.com/DragonAddons/DragonToast/commit/1c399f41beacb7b0b8b07ddd63df7422190ece88))
+* fix changelog list items ([#65](https://github.com/Xerrion/DragonToast/issues/65)) ([1c399f4](https://github.com/Xerrion/DragonToast/commit/1c399f41beacb7b0b8b07ddd63df7422190ece88))
 
-## [2.0.2](https://github.com/DragonAddons/DragonToast/compare/2.0.1...2.0.2) (2026-03-13)
-
-
-### ⚙️ Miscellaneous Tasks
-
-* fix wrong toc version ([5d9c56a](https://github.com/DragonAddons/DragonToast/commit/5d9c56a51b5167f01d9533597ab86559a1dd24ea))
-
-## [2.0.1](https://github.com/DragonAddons/DragonToast/compare/2.0.0...2.0.1) (2026-03-13)
+## [2.0.2](https://github.com/Xerrion/DragonToast/compare/2.0.1...2.0.2) (2026-03-13)
 
 
 ### ⚙️ Miscellaneous Tasks
 
-* toc bump ([ea5e57d](https://github.com/DragonAddons/DragonToast/commit/ea5e57d1db6ce10333f25d2354766c86eaf80787))
+* fix wrong toc version ([5d9c56a](https://github.com/Xerrion/DragonToast/commit/5d9c56a51b5167f01d9533597ab86559a1dd24ea))
 
-## [2.0.0](https://github.com/DragonAddons/DragonToast/compare/1.13.0...2.0.0) (2026-03-13)
+## [2.0.1](https://github.com/Xerrion/DragonToast/compare/2.0.0...2.0.1) (2026-03-13)
+
+
+### ⚙️ Miscellaneous Tasks
+
+* toc bump ([ea5e57d](https://github.com/Xerrion/DragonToast/commit/ea5e57d1db6ce10333f25d2354766c86eaf80787))
+
+## [2.0.0](https://github.com/Xerrion/DragonToast/compare/1.13.0...2.0.0) (2026-03-13)
 
 
 ### ⚠ BREAKING CHANGES
@@ -27,162 +27,162 @@
 
 ### 🚀 Features
 
-* add bundled default notification sounds ([#122](https://github.com/DragonAddons/DragonToast/issues/122)) ([4930a55](https://github.com/DragonAddons/DragonToast/commit/4930a5557efdcbf885a2df76185a860ed99a9aae))
-* codebase-wide refactoring for consistency and maintainability ([#127](https://github.com/DragonAddons/DragonToast/issues/127)) ([7dfee81](https://github.com/DragonAddons/DragonToast/commit/7dfee818a84fa305716928ba1c7478c657888b87))
+* add bundled default notification sounds ([#122](https://github.com/Xerrion/DragonToast/issues/122)) ([4930a55](https://github.com/Xerrion/DragonToast/commit/4930a5557efdcbf885a2df76185a860ed99a9aae))
+* codebase-wide refactoring for consistency and maintainability ([#127](https://github.com/Xerrion/DragonToast/issues/127)) ([7dfee81](https://github.com/Xerrion/DragonToast/commit/7dfee818a84fa305716928ba1c7478c657888b87))
 
 
 ### 🐛 Bug Fixes
 
-* add missing currency loot messages ([#126](https://github.com/DragonAddons/DragonToast/issues/126)) ([b4b9853](https://github.com/DragonAddons/DragonToast/commit/b4b9853ffbefc4f75eb825a4abaf60f4fe71ecd8))
-* exclude generate_sound.py from bundling ([3e96233](https://github.com/DragonAddons/DragonToast/commit/3e96233e4520694cda9a3ae710e0e42bb7d67830))
-* use correct verion tags ([#124](https://github.com/DragonAddons/DragonToast/issues/124)) ([ab0463c](https://github.com/DragonAddons/DragonToast/commit/ab0463c650fc6d57fed428c261ca12c8ce594d16))
+* add missing currency loot messages ([#126](https://github.com/Xerrion/DragonToast/issues/126)) ([b4b9853](https://github.com/Xerrion/DragonToast/commit/b4b9853ffbefc4f75eb825a4abaf60f4fe71ecd8))
+* exclude generate_sound.py from bundling ([3e96233](https://github.com/Xerrion/DragonToast/commit/3e96233e4520694cda9a3ae710e0e42bb7d67830))
+* use correct verion tags ([#124](https://github.com/Xerrion/DragonToast/issues/124)) ([ab0463c](https://github.com/Xerrion/DragonToast/commit/ab0463c650fc6d57fed428c261ca12c8ce594d16))
 
-## [1.13.0](https://github.com/DragonAddons/DragonToast/compare/1.12.1...1.13.0) (2026-03-07)
+## [1.13.0](https://github.com/Xerrion/DragonToast/compare/1.12.1...1.13.0) (2026-03-07)
 
 
 ### 🚀 Features
 
-* add AceLocale-3.0 localization support ([#95](https://github.com/DragonAddons/DragonToast/issues/95)) ([#117](https://github.com/DragonAddons/DragonToast/issues/117)) ([0780b45](https://github.com/DragonAddons/DragonToast/commit/0780b45a9e9570803331f86f43c101fdeb603fba))
+* add AceLocale-3.0 localization support ([#95](https://github.com/Xerrion/DragonToast/issues/95)) ([#117](https://github.com/Xerrion/DragonToast/issues/117)) ([0780b45](https://github.com/Xerrion/DragonToast/commit/0780b45a9e9570803331f86f43c101fdeb603fba))
 
 
 ### 🐛 Bug Fixes
 
-* clarify slash command help and toggle behavior ([#114](https://github.com/DragonAddons/DragonToast/issues/114)) ([016ce4c](https://github.com/DragonAddons/DragonToast/commit/016ce4caf96242986424da3678539c4f2e6468eb))
+* clarify slash command help and toggle behavior ([#114](https://github.com/Xerrion/DragonToast/issues/114)) ([016ce4c](https://github.com/Xerrion/DragonToast/commit/016ce4caf96242986424da3678539c4f2e6468eb))
 
 
 ### 🚜 Refactor
 
-* convert to monorepo structure ([#116](https://github.com/DragonAddons/DragonToast/issues/116)) ([689fc89](https://github.com/DragonAddons/DragonToast/commit/689fc89f3b97760d29bbb66794838f2b515fea51))
+* convert to monorepo structure ([#116](https://github.com/Xerrion/DragonToast/issues/116)) ([689fc89](https://github.com/Xerrion/DragonToast/commit/689fc89f3b97760d29bbb66794838f2b515fea51))
 
-## [1.12.1](https://github.com/DragonAddons/DragonToast/compare/1.12.0...1.12.1) (2026-03-06)
+## [1.12.1](https://github.com/Xerrion/DragonToast/compare/1.12.0...1.12.1) (2026-03-06)
 
 
 ### 🐛 Bug Fixes
 
-* correct TOC packager directives ([#112](https://github.com/DragonAddons/DragonToast/issues/112)) ([7ce6c6f](https://github.com/DragonAddons/DragonToast/commit/7ce6c6ff80054de5f90647c410da50c02681f3e0))
+* correct TOC packager directives ([#112](https://github.com/Xerrion/DragonToast/issues/112)) ([7ce6c6f](https://github.com/Xerrion/DragonToast/commit/7ce6c6ff80054de5f90647c410da50c02681f3e0))
 
-## [1.12.0](https://github.com/DragonAddons/DragonToast/compare/1.11.0...1.12.0) (2026-03-06)
+## [1.12.0](https://github.com/Xerrion/DragonToast/compare/1.11.0...1.12.0) (2026-03-06)
 
 
 ### 🚀 Features
 
-* add reputation gain toasts ([#93](https://github.com/DragonAddons/DragonToast/issues/93)) ([#110](https://github.com/DragonAddons/DragonToast/issues/110)) ([d39ae79](https://github.com/DragonAddons/DragonToast/commit/d39ae79848584d3f0667d80f533f13c819484d7e))
+* add reputation gain toasts ([#93](https://github.com/Xerrion/DragonToast/issues/93)) ([#110](https://github.com/Xerrion/DragonToast/issues/110)) ([d39ae79](https://github.com/Xerrion/DragonToast/commit/d39ae79848584d3f0667d80f533f13c819484d7e))
 
-## [1.11.0](https://github.com/DragonAddons/DragonToast/compare/1.10.2...1.11.0) (2026-03-05)
-
-
-### 🚀 Features
-
-* custom options panel replacing AceConfig ([#107](https://github.com/DragonAddons/DragonToast/issues/107)) ([5d09ee8](https://github.com/DragonAddons/DragonToast/commit/5d09ee8ae2b5cbd3c6fea82c97830faf78ec781d))
-
-## [1.10.2](https://github.com/DragonAddons/DragonToast/compare/1.10.1...1.10.2) (2026-03-02)
-
-
-### 🐛 Bug Fixes
-
-* animation glitches and deferred slide jumps ([#104](https://github.com/DragonAddons/DragonToast/issues/104)) ([#105](https://github.com/DragonAddons/DragonToast/issues/105)) ([b1ff4f1](https://github.com/DragonAddons/DragonToast/commit/b1ff4f1c1b9081db87b5021f229d87859e82e533))
-* extract CurrencyListener and resolve currency icons ([#102](https://github.com/DragonAddons/DragonToast/issues/102)) ([#103](https://github.com/DragonAddons/DragonToast/issues/103)) ([3976b34](https://github.com/DragonAddons/DragonToast/commit/3976b34bb8f17ca4f5b595f6c53ea099905b23ac))
-
-## [1.10.1](https://github.com/DragonAddons/DragonToast/compare/1.10.0...1.10.1) (2026-03-01)
-
-
-### 🐛 Bug Fixes
-
-* resolve anchor z-order and position shift on lock ([#100](https://github.com/DragonAddons/DragonToast/issues/100)) ([4d8f217](https://github.com/DragonAddons/DragonToast/commit/4d8f2175ef5d7eb3ce14bcc01b037cce2f16d1fb))
-
-## [1.10.0](https://github.com/DragonAddons/DragonToast/compare/1.9.0...1.10.0) (2026-03-01)
+## [1.11.0](https://github.com/Xerrion/DragonToast/compare/1.10.2...1.11.0) (2026-03-05)
 
 
 ### 🚀 Features
 
-* add built-in skin presets ([#88](https://github.com/DragonAddons/DragonToast/issues/88)) ([#92](https://github.com/DragonAddons/DragonToast/issues/92)) ([8c2a7c4](https://github.com/DragonAddons/DragonToast/commit/8c2a7c4a87e5f07c39525b6a6b73f8557c7565de))
-* add mail toast support ([#87](https://github.com/DragonAddons/DragonToast/issues/87)) ([#89](https://github.com/DragonAddons/DragonToast/issues/89)) ([05914a9](https://github.com/DragonAddons/DragonToast/commit/05914a94929690a35a24fa4e47bd898da7b89808))
+* custom options panel replacing AceConfig ([#107](https://github.com/Xerrion/DragonToast/issues/107)) ([5d09ee8](https://github.com/Xerrion/DragonToast/commit/5d09ee8ae2b5cbd3c6fea82c97830faf78ec781d))
+
+## [1.10.2](https://github.com/Xerrion/DragonToast/compare/1.10.1...1.10.2) (2026-03-02)
 
 
 ### 🐛 Bug Fixes
 
-* use hardcoded honor icon FileDataIDs ([#91](https://github.com/DragonAddons/DragonToast/issues/91)) ([d074976](https://github.com/DragonAddons/DragonToast/commit/d074976bc3fb75c6359e6a8c84ceb67b4e928685))
+* animation glitches and deferred slide jumps ([#104](https://github.com/Xerrion/DragonToast/issues/104)) ([#105](https://github.com/Xerrion/DragonToast/issues/105)) ([b1ff4f1](https://github.com/Xerrion/DragonToast/commit/b1ff4f1c1b9081db87b5021f229d87859e82e533))
+* extract CurrencyListener and resolve currency icons ([#102](https://github.com/Xerrion/DragonToast/issues/102)) ([#103](https://github.com/Xerrion/DragonToast/issues/103)) ([3976b34](https://github.com/Xerrion/DragonToast/commit/3976b34bb8f17ca4f5b595f6c53ea099905b23ac))
+
+## [1.10.1](https://github.com/Xerrion/DragonToast/compare/1.10.0...1.10.1) (2026-03-01)
+
+
+### 🐛 Bug Fixes
+
+* resolve anchor z-order and position shift on lock ([#100](https://github.com/Xerrion/DragonToast/issues/100)) ([4d8f217](https://github.com/Xerrion/DragonToast/commit/4d8f2175ef5d7eb3ce14bcc01b037cce2f16d1fb))
+
+## [1.10.0](https://github.com/Xerrion/DragonToast/compare/1.9.0...1.10.0) (2026-03-01)
+
+
+### 🚀 Features
+
+* add built-in skin presets ([#88](https://github.com/Xerrion/DragonToast/issues/88)) ([#92](https://github.com/Xerrion/DragonToast/issues/92)) ([8c2a7c4](https://github.com/Xerrion/DragonToast/commit/8c2a7c4a87e5f07c39525b6a6b73f8557c7565de))
+* add mail toast support ([#87](https://github.com/Xerrion/DragonToast/issues/87)) ([#89](https://github.com/Xerrion/DragonToast/issues/89)) ([05914a9](https://github.com/Xerrion/DragonToast/commit/05914a94929690a35a24fa4e47bd898da7b89808))
+
+
+### 🐛 Bug Fixes
+
+* use hardcoded honor icon FileDataIDs ([#91](https://github.com/Xerrion/DragonToast/issues/91)) ([d074976](https://github.com/Xerrion/DragonToast/commit/d074976bc3fb75c6359e6a8c84ceb67b4e928685))
 
 
 ### 🚜 Refactor
 
-* extract shared listener helpers into ListenerUtils ([#96](https://github.com/DragonAddons/DragonToast/issues/96)) ([#98](https://github.com/DragonAddons/DragonToast/issues/98)) ([0702a5b](https://github.com/DragonAddons/DragonToast/commit/0702a5b24f154ec5ec6e1af471cded9caee6a501))
+* extract shared listener helpers into ListenerUtils ([#96](https://github.com/Xerrion/DragonToast/issues/96)) ([#98](https://github.com/Xerrion/DragonToast/issues/98)) ([0702a5b](https://github.com/Xerrion/DragonToast/commit/0702a5b24f154ec5ec6e1af471cded9caee6a501))
 
-## [1.9.0](https://github.com/DragonAddons/DragonToast/compare/1.8.2...1.9.0) (2026-02-27)
+## [1.9.0](https://github.com/Xerrion/DragonToast/compare/1.8.2...1.9.0) (2026-02-27)
 
 
 ### 🚀 Features
 
-* DragonLoot cross-addon bridge via AceEvent messaging ([#70](https://github.com/DragonAddons/DragonToast/issues/70)) ([7b4ed89](https://github.com/DragonAddons/DragonToast/commit/7b4ed8945ec4a8aad0495ecef0df435a8d4c0089))
-* enhanced border customization ([#75](https://github.com/DragonAddons/DragonToast/issues/75)) ([37f1918](https://github.com/DragonAddons/DragonToast/commit/37f19184bf70afec5195f4eb8371fb67afde1ca8))
-* enhanced roll-won toast with winner name and roll details ([#71](https://github.com/DragonAddons/DragonToast/issues/71)) ([e1c7b62](https://github.com/DragonAddons/DragonToast/commit/e1c7b622be7e55e8f78bfc08df48eb5474341fc1))
+* DragonLoot cross-addon bridge via AceEvent messaging ([#70](https://github.com/Xerrion/DragonToast/issues/70)) ([7b4ed89](https://github.com/Xerrion/DragonToast/commit/7b4ed8945ec4a8aad0495ecef0df435a8d4c0089))
+* enhanced border customization ([#75](https://github.com/Xerrion/DragonToast/issues/75)) ([37f1918](https://github.com/Xerrion/DragonToast/commit/37f19184bf70afec5195f4eb8371fb67afde1ca8))
+* enhanced roll-won toast with winner name and roll details ([#71](https://github.com/Xerrion/DragonToast/issues/71)) ([e1c7b62](https://github.com/Xerrion/DragonToast/commit/e1c7b622be7e55e8f78bfc08df48eb5474341fc1))
 
 
 ### 🐛 Bug Fixes
 
-* add contents:write permission to release workflow ([7dd5274](https://github.com/DragonAddons/DragonToast/commit/7dd5274e472c4f9a1bc744bc397c3172375c5e85))
-* add permissions to caller workflow ([#68](https://github.com/DragonAddons/DragonToast/issues/68)) ([1ae82cb](https://github.com/DragonAddons/DragonToast/commit/1ae82cbb556adb2491d760974ecbd246df86ddcd))
-* address code review issues in MessageBridge ([#81](https://github.com/DragonAddons/DragonToast/issues/81)) ([5843b81](https://github.com/DragonAddons/DragonToast/commit/5843b8109bfcab9d0b126a64bc8327f8d696c56b))
-* resolve minimap icon toggle inverted logic ([#74](https://github.com/DragonAddons/DragonToast/issues/74)) ([7389939](https://github.com/DragonAddons/DragonToast/commit/738993949c3e2c4f4d631d7e00ad182c30972e1e))
-* rework toast frame layout with child-frame hierarchy ([#83](https://github.com/DragonAddons/DragonToast/issues/83)) ([9e3daf8](https://github.com/DragonAddons/DragonToast/commit/9e3daf81ca37070b7e9220c40f2fc2887739c71b))
-* stacking accumulation bugs and add busted unit tests ([#85](https://github.com/DragonAddons/DragonToast/issues/85)) ([f45f211](https://github.com/DragonAddons/DragonToast/commit/f45f211f4870f02430271cf0c7fbc8b899bed961))
-* use faction-specific honor icon constants (closes [#76](https://github.com/DragonAddons/DragonToast/issues/76)) ([#84](https://github.com/DragonAddons/DragonToast/issues/84)) ([38499c9](https://github.com/DragonAddons/DragonToast/commit/38499c938a5de14b9853c8409dfe024ccfd73fae))
+* add contents:write permission to release workflow ([7dd5274](https://github.com/Xerrion/DragonToast/commit/7dd5274e472c4f9a1bc744bc397c3172375c5e85))
+* add permissions to caller workflow ([#68](https://github.com/Xerrion/DragonToast/issues/68)) ([1ae82cb](https://github.com/Xerrion/DragonToast/commit/1ae82cbb556adb2491d760974ecbd246df86ddcd))
+* address code review issues in MessageBridge ([#81](https://github.com/Xerrion/DragonToast/issues/81)) ([5843b81](https://github.com/Xerrion/DragonToast/commit/5843b8109bfcab9d0b126a64bc8327f8d696c56b))
+* resolve minimap icon toggle inverted logic ([#74](https://github.com/Xerrion/DragonToast/issues/74)) ([7389939](https://github.com/Xerrion/DragonToast/commit/738993949c3e2c4f4d631d7e00ad182c30972e1e))
+* rework toast frame layout with child-frame hierarchy ([#83](https://github.com/Xerrion/DragonToast/issues/83)) ([9e3daf8](https://github.com/Xerrion/DragonToast/commit/9e3daf81ca37070b7e9220c40f2fc2887739c71b))
+* stacking accumulation bugs and add busted unit tests ([#85](https://github.com/Xerrion/DragonToast/issues/85)) ([f45f211](https://github.com/Xerrion/DragonToast/commit/f45f211f4870f02430271cf0c7fbc8b899bed961))
+* use faction-specific honor icon constants (closes [#76](https://github.com/Xerrion/DragonToast/issues/76)) ([#84](https://github.com/Xerrion/DragonToast/issues/84)) ([38499c9](https://github.com/Xerrion/DragonToast/commit/38499c938a5de14b9853c8409dfe024ccfd73fae))
 
-## [1.8.1](https://github.com/DragonAddons/DragonToast/compare/1.8.0...1.8.1) (2026-02-25)
+## [1.8.1](https://github.com/Xerrion/DragonToast/compare/1.8.0...1.8.1) (2026-02-25)
 
 ### ⚙️ Miscellaneous Tasks
 
-* customize release changelog ([#63](https://github.com/DragonAddons/DragonToast/issues/63)) ([7f07d71](https://github.com/DragonAddons/DragonToast/commit/7f07d7107c9bf28cd2f5676bd5a00fb1cc039492))
+* customize release changelog ([#63](https://github.com/Xerrion/DragonToast/issues/63)) ([7f07d71](https://github.com/Xerrion/DragonToast/commit/7f07d7107c9bf28cd2f5676bd5a00fb1cc039492))
 
-## [1.8.0](https://github.com/DragonAddons/DragonToast/compare/1.7.0...1.8.0) (2026-02-25)
+## [1.8.0](https://github.com/Xerrion/DragonToast/compare/1.7.0...1.8.0) (2026-02-25)
 
 ### 🚀 Features
 
-* support mop classic ([#62](https://github.com/DragonAddons/DragonToast/issues/62)) ([94433ca](https://github.com/DragonAddons/DragonToast/commit/94433ca8d22014e625ad82350d1e42ebc4616186))
+* support mop classic ([#62](https://github.com/Xerrion/DragonToast/issues/62)) ([94433ca](https://github.com/Xerrion/DragonToast/commit/94433ca8d22014e625ad82350d1e42ebc4616186))
 
 ### 🐛 Bug Fixes
 
-* **toast:** sync slide start anchor ([#59](https://github.com/DragonAddons/DragonToast/issues/59)) ([fb174a9](https://github.com/DragonAddons/DragonToast/commit/fb174a93161e3af30ecc617ffc38cb42514910eb))
+* **toast:** sync slide start anchor ([#59](https://github.com/Xerrion/DragonToast/issues/59)) ([fb174a9](https://github.com/Xerrion/DragonToast/commit/fb174a93161e3af30ecc617ffc38cb42514910eb))
 
 ### 📚 Documentation
 
-* update README ([#61](https://github.com/DragonAddons/DragonToast/issues/61)) ([900f725](https://github.com/DragonAddons/DragonToast/commit/900f725310c765dd5af2e63f5587726c04bf70ad))
-* updated AGENTS.md with current information ([#58](https://github.com/DragonAddons/DragonToast/issues/58)) ([7114e7e](https://github.com/DragonAddons/DragonToast/commit/7114e7e351388e749fe71e540513ed5955a85503))
+* update README ([#61](https://github.com/Xerrion/DragonToast/issues/61)) ([900f725](https://github.com/Xerrion/DragonToast/commit/900f725310c765dd5af2e63f5587726c04bf70ad))
+* updated AGENTS.md with current information ([#58](https://github.com/Xerrion/DragonToast/issues/58)) ([7114e7e](https://github.com/Xerrion/DragonToast/commit/7114e7e351388e749fe71e540513ed5955a85503))
 
-## [1.7.0](https://github.com/DragonAddons/DragonToast/compare/1.6.1...1.7.0) (2026-02-24)
+## [1.7.0](https://github.com/Xerrion/DragonToast/compare/1.6.1...1.7.0) (2026-02-24)
 
 ### 🚀 Features
 
-* add honor gain toasts ([#55](https://github.com/DragonAddons/DragonToast/issues/55)) ([cdf6ead](https://github.com/DragonAddons/DragonToast/commit/cdf6eadc3d7a245260b22f3dfa99f42f36e3ee3a))
+* add honor gain toasts ([#55](https://github.com/Xerrion/DragonToast/issues/55)) ([cdf6ead](https://github.com/Xerrion/DragonToast/commit/cdf6eadc3d7a245260b22f3dfa99f42f36e3ee3a))
 
-## [1.6.1](https://github.com/DragonAddons/DragonToast/compare/1.6.0...1.6.1) (2026-02-24)
+## [1.6.1](https://github.com/Xerrion/DragonToast/compare/1.6.0...1.6.1) (2026-02-24)
 
 ### 🐛 Bug Fixes
 
-* consolidate duplicates, optimize pooling, and improve code quality ([#51](https://github.com/DragonAddons/DragonToast/issues/51)) ([cb4cd1d](https://github.com/DragonAddons/DragonToast/commit/cb4cd1db4f7513a75b18411c870a106749f1477f))
-* remove unused string_format variable in XPListener ([#53](https://github.com/DragonAddons/DragonToast/issues/53)) ([e7deb2f](https://github.com/DragonAddons/DragonToast/commit/e7deb2fe39578ad8f59f932abbb60c72791ddd5d))
+* consolidate duplicates, optimize pooling, and improve code quality ([#51](https://github.com/Xerrion/DragonToast/issues/51)) ([cb4cd1d](https://github.com/Xerrion/DragonToast/commit/cb4cd1db4f7513a75b18411c870a106749f1477f))
+* remove unused string_format variable in XPListener ([#53](https://github.com/Xerrion/DragonToast/issues/53)) ([e7deb2f](https://github.com/Xerrion/DragonToast/commit/e7deb2fe39578ad8f59f932abbb60c72791ddd5d))
 
-## [1.6.0](https://github.com/DragonAddons/DragonToast/compare/1.5.0...1.6.0) (2026-02-23)
-
-### 🚀 Features
-
-* add configurable gold display format ([#49](https://github.com/DragonAddons/DragonToast/issues/49)) ([485cffc](https://github.com/DragonAddons/DragonToast/commit/485cffcdc759c613ba7f15d876a4dc8eecc56ea6))
-
-### ⚙️ Miscellaneous Tasks
-
-* simplify .pkgmeta ignore list with *.png and*.md globs ([f7b3ba8](https://github.com/DragonAddons/DragonToast/commit/f7b3ba8df74b57c1173d6a44ab16cb7cf9e6aa37))
-
-## [1.5.0](https://github.com/DragonAddons/DragonToast/compare/1.4.3...1.5.0) (2026-02-23)
+## [1.6.0](https://github.com/Xerrion/DragonToast/compare/1.5.0...1.6.0) (2026-02-23)
 
 ### 🚀 Features
 
-* leverage LibAnimate queue APIs for optimized toast management ([#47](https://github.com/DragonAddons/DragonToast/issues/47)) ([11d1f9f](https://github.com/DragonAddons/DragonToast/commit/11d1f9f93d2c352480bf61af4ee256a4c2d41820))
+* add configurable gold display format ([#49](https://github.com/Xerrion/DragonToast/issues/49)) ([485cffc](https://github.com/Xerrion/DragonToast/commit/485cffcdc759c613ba7f15d876a4dc8eecc56ea6))
 
 ### ⚙️ Miscellaneous Tasks
 
-* add scaled image ([#45](https://github.com/DragonAddons/DragonToast/issues/45)) ([aa8a2cd](https://github.com/DragonAddons/DragonToast/commit/aa8a2cdffaab290d7a6f3edfdf139e37b06daa9b))
-* centered header content of the README ([#46](https://github.com/DragonAddons/DragonToast/issues/46)) ([d567ea8](https://github.com/DragonAddons/DragonToast/commit/d567ea8802c7311dcc19500e419ef7ed02c15685))
-* update LibAnimate submodule ([15ae034](https://github.com/DragonAddons/DragonToast/commit/15ae0349c3bcf878e78d774cd21ee96d411bed47))
+* simplify .pkgmeta ignore list with *.png and*.md globs ([f7b3ba8](https://github.com/Xerrion/DragonToast/commit/f7b3ba8df74b57c1173d6a44ab16cb7cf9e6aa37))
+
+## [1.5.0](https://github.com/Xerrion/DragonToast/compare/1.4.3...1.5.0) (2026-02-23)
+
+### 🚀 Features
+
+* leverage LibAnimate queue APIs for optimized toast management ([#47](https://github.com/Xerrion/DragonToast/issues/47)) ([11d1f9f](https://github.com/Xerrion/DragonToast/commit/11d1f9f93d2c352480bf61af4ee256a4c2d41820))
+
+### ⚙️ Miscellaneous Tasks
+
+* add scaled image ([#45](https://github.com/Xerrion/DragonToast/issues/45)) ([aa8a2cd](https://github.com/Xerrion/DragonToast/commit/aa8a2cdffaab290d7a6f3edfdf139e37b06daa9b))
+* centered header content of the README ([#46](https://github.com/Xerrion/DragonToast/issues/46)) ([d567ea8](https://github.com/Xerrion/DragonToast/commit/d567ea8802c7311dcc19500e419ef7ed02c15685))
+* update LibAnimate submodule ([15ae034](https://github.com/Xerrion/DragonToast/commit/15ae0349c3bcf878e78d774cd21ee96d411bed47))
 
 ## [1.4.2] - 2026-02-22
 
