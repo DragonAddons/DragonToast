@@ -387,28 +387,35 @@ local function CreateToastTexts(frame)
     frame.looter:SetTextColor(MUTED_TEXT_COLOR.r, MUTED_TEXT_COLOR.g, MUTED_TEXT_COLOR.b)
 end
 
-local function SnapActiveSlide(frame)
-    local libAnim = ns.LibAnimate
-    if not libAnim or not libAnim.activeAnimations then return end
-    local state = libAnim.activeAnimations[frame]
-    if not state or not state.slideStartTime then return end
+local function PauseNoAnimTimer(frame)
+    if not frame._noAnimTimer then return end
+    if not frame._holdStartTime then return end
 
-    local slideElapsed = GetTime() - state.slideStartTime
-    local slideProgress = math.min(slideElapsed / state.slideDuration, 1.0)
-    state.anchorX = state.slideFromX + (state.slideToX - state.slideFromX) * slideProgress
-    state.anchorY = state.slideFromY + (state.slideToY - state.slideFromY) * slideProgress
-    state.slideStartTime = nil
-    state.slideDuration = nil
-    state.slideFromX = nil
-    state.slideFromY = nil
-    state.slideToX = nil
-    state.slideToY = nil
-    state.slideElapsedAtPause = nil
+    local elapsed = GetTime() - frame._holdStartTime
+    local holdDuration = ns.Addon.db.profile.animation.holdDuration
+    frame._holdRemaining = holdDuration - elapsed
+    if frame._holdRemaining < 0 then
+        frame._holdRemaining = 0
+    end
+
+    ns.Addon:CancelTimer(frame._noAnimTimer)
+    frame._noAnimTimer = nil
 end
 
-local function GetCurrentY(frame)
-    local _, _, _, _, y = frame:GetPoint()
-    return y or 0
+local function ResumeNoAnimTimer(frame)
+    if frame._holdRemaining == nil then return end
+    if frame._noAnimTimer then return end
+
+    local remaining = frame._holdRemaining
+    frame._holdRemaining = nil
+    frame._holdStartTime = GetTime()
+
+    frame._noAnimTimer = ns.Addon:ScheduleTimer(function()
+        frame._noAnimTimer = nil
+        frame._holdStartTime = nil
+        frame._phase = nil
+        ns.ToastManager.OnToastFinished(frame)
+    end, remaining)
 end
 
 --- Wire up click, enter, and leave scripts on the root Button frame
@@ -438,8 +445,29 @@ local function SetupToastScripts(frame)
         if self._phase == nil or self._isExiting or self._isEntering then return end
 
         self._isHovered = true
-        SnapActiveSlide(self)
-        self._frozenY = GetCurrentY(self)
+        if not db.profile.animation.enableAnimations then
+            PauseNoAnimTimer(self)
+        else
+            -- Snap any in-progress LibAnimate slide to its current
+            -- interpolated position so the toast stops moving immediately.
+            local libAnim = ns.LibAnimate
+            if libAnim and libAnim.activeAnimations then
+                local state = libAnim.activeAnimations[self]
+                if state and state.slideStartTime then
+                    local slideElapsed = GetTime() - state.slideStartTime
+                    local slideProgress = math.min(slideElapsed / state.slideDuration, 1.0)
+                    state.anchorX = state.slideFromX + (state.slideToX - state.slideFromX) * slideProgress
+                    state.anchorY = state.slideFromY + (state.slideToY - state.slideFromY) * slideProgress
+                    state.slideStartTime = nil
+                    state.slideDuration = nil
+                    state.slideFromX = nil
+                    state.slideFromY = nil
+                    state.slideToX = nil
+                    state.slideToY = nil
+                    state.slideElapsedAtPause = nil
+                end
+            end
+        end
     end)
 
     frame:SetScript("OnLeave", function(self)
@@ -451,11 +479,11 @@ local function SetupToastScripts(frame)
         local db = ns.Addon.db
         if not db or not db.profile.animation.pauseOnHover then return end
 
-        if self._exitDeferred then
-            ns.ToastAnimations.PlayDeferredExit(self)
+        if db.profile.animation.enableAnimations then
+            ns.ToastAnimations.ResumeFromHoverHold(self)
+        else
+            ResumeNoAnimTimer(self)
         end
-        self._frozenY = nil
-        ns.ToastManager.UpdatePositions()
     end)
 end
 
@@ -665,9 +693,7 @@ function ns.ToastFrame.Release(frame)
     frame._holdStartTime = nil
     frame._holdRemaining = nil
     frame._isHovered = false
-    frame._frozenY = nil
-    frame._exitDeferred = nil
-    frame._deferredExitCallback = nil
+    frame._hoverHoldCallback = nil
     frame._backdropKey = nil
     frame._borderKey = nil
     frame._iconBackdropKey = nil
