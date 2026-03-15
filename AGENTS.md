@@ -41,7 +41,7 @@ CI runs Luacheck via `nebularg/actions-luacheck@v1` on `pull_request_target` to 
 
 ### Packaging
 
-No local build step. BigWigsMods packager runs automatically on tag push via `release.yml`. Release flow: merge to `master` -> release-please PR -> merge that PR -> tag -> packager publishes to CurseForge, Wago, GitHub Releases.
+No local build step. BigWigsMods packager runs automatically via `packager.yml` (dispatched by `release.yml`). Release flow: merge to `master` -> release-please PR -> merge that PR -> tag + GitHub Release -> release.yml dispatches packager.yml -> packager publishes to CurseForge, Wago, GitHub Releases.
 
 ---
 
@@ -249,7 +249,8 @@ AceEvent:SendMessage("DRAGONTOAST_UNSUPPRESS", "MyLootAddon")
 | Workflow         | Trigger                         | Purpose                                                          |
 |------------------|---------------------------------|------------------------------------------------------------------|
 | `lint.yml`       | `pull_request_target` to master | Luacheck + busted tests via `Xerrion/wow-workflows` reusable workflow |
-| `release.yml`    | `push` to master                | release-please PR + BigWigsMods packager via `Xerrion/wow-workflows` combined workflow |
+| `release.yml`    | `push` to master                | release-please PR via `Xerrion/wow-workflows`; dispatches `packager.yml` on release |
+| `packager.yml`   | `workflow_dispatch` (from release.yml) | BigWigsMods packager via `Xerrion/wow-workflows` reusable workflow |
 | `toc-update.yml` | Weekly schedule / manual        | Auto-bump TOC Interface versions via `Xerrion/wow-workflows` reusable workflow |
 
 Branch protection on `master`: PRs required, Luacheck status check required, branches must be up to date, no force pushes. Squash merge only; auto-delete head branches.
