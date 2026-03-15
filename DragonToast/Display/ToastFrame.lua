@@ -390,14 +390,13 @@ end
 
 local function PauseNoAnimTimer(frame)
     if not frame._noAnimTimer then return end
-    if not frame._holdStartTime then return end
+    if not frame._holdEndTime then return end
 
-    local elapsed = GetTime() - frame._holdStartTime
-    local holdDuration = ns.Addon.db.profile.animation.holdDuration
-    frame._holdRemaining = holdDuration - elapsed
+    frame._holdRemaining = frame._holdEndTime - GetTime()
     if frame._holdRemaining < 0 then
         frame._holdRemaining = 0
     end
+    frame._holdEndTime = nil
 
     ns.Addon:CancelTimer(frame._noAnimTimer)
     frame._noAnimTimer = nil
@@ -409,11 +408,11 @@ local function ResumeNoAnimTimer(frame)
 
     local remaining = frame._holdRemaining
     frame._holdRemaining = nil
-    frame._holdStartTime = GetTime()
+    frame._holdEndTime = GetTime() + remaining
 
     frame._noAnimTimer = ns.Addon:ScheduleTimer(function()
         frame._noAnimTimer = nil
-        frame._holdStartTime = nil
+        frame._holdEndTime = nil
         frame._phase = nil
         ns.ToastManager.OnToastFinished(frame)
     end, remaining)
@@ -459,8 +458,11 @@ local function SetupToastScripts(frame)
                 elseif libAnim.activeAnimations then
                     -- Freeze in-progress slide at its current interpolated position.
                     -- Accesses LibAnimate internals (tested against LibAnimate r20250315).
+                    -- Guard all required fields so we degrade gracefully if internals change.
                     local state = libAnim.activeAnimations[self]
-                    if state and state.slideStartTime then
+                    if state and state.slideStartTime and state.slideDuration
+                        and state.slideFromX and state.slideFromY
+                        and state.slideToX and state.slideToY then
                         local slideElapsed = GetTime() - state.slideStartTime
                         local slideProgress = math.min(slideElapsed / state.slideDuration, 1.0)
                         state.anchorX = state.slideFromX
@@ -499,8 +501,7 @@ local function SetupToastScripts(frame)
                     libAnim:ResumeQueue(self)
                     resumed = true
                 elseif ns.ToastAnimations.ResumeFromHoverHold then
-                    ns.ToastAnimations.ResumeFromHoverHold(self)
-                    resumed = true
+                    resumed = ns.ToastAnimations.ResumeFromHoverHold(self)
                 end
             end
         else
@@ -719,7 +720,7 @@ function ns.ToastFrame.Release(frame)
     frame:ClearAllPoints()
     frame.lootData = nil
     frame._noAnimTimer = nil
-    frame._holdStartTime = nil
+    frame._holdEndTime = nil
     frame._holdRemaining = nil
     frame._isHovered = false
     frame._savedStrata = nil
