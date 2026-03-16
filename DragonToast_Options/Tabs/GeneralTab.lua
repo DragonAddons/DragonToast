@@ -33,8 +33,11 @@ local LSM = LibStub("LibSharedMedia-3.0", true)
 -------------------------------------------------------------------------------
 -- Helpers
 -- Builds a sorted list of available sound options for use in a dropdown.
--- Includes a leading `{ value = "None", text = L["NONE"] }` entry. If LibSharedMedia-3.0 is unavailable, returns an empty table.
--- @return A table of `{ value = <soundName>, text = <displayName> }` entries, sorted alphabetically by `text`, with the "None" entry first (or `{}` if no sound provider).
+-- Includes a leading `{ value = "None", text = L["NONE"] }` entry.
+-- If LibSharedMedia-3.0 is unavailable, returns an empty table.
+-- @return A table of `{ value = <soundName>, text = <displayName> }`
+--   entries, sorted alphabetically by `text`, with the "None" entry
+--   first (or `{}` if no sound provider).
 
 local function BuildSoundValues()
     if not LSM then return {} end
@@ -103,7 +106,8 @@ local function CreateCoreSection(parent, yOffset)
 end
 
 -- Builds the "Sound" subsection of the General tab UI.
--- Creates a header, an enable-sound toggle, and a sound selection dropdown; the dropdown is disabled when sound is disabled.
+-- Creates a header, an enable-sound toggle, and a sound selection
+-- dropdown; the dropdown is disabled when sound is disabled.
 -- @param parent The parent UI frame to anchor the section's widgets to.
 -- @param yOffset The starting vertical offset for placing widgets; layout proceeds downward.
 -- @return The updated vertical offset after placing the section's widgets.

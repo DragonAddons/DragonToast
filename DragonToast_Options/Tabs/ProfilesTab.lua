@@ -95,9 +95,11 @@ end
 -------------------------------------------------------------------------------
 -- Section builders
 -- Builds the "Current Profile" UI section inside the given parent container.
--- The section includes a header, description, an active-profile dropdown, an input for a new profile name, and a create button.
+-- The section includes a header, description, an active-profile
+-- dropdown, an input for a new profile name, and a create button.
 -- @param parent The parent UI frame to which the section widgets are attached.
--- @param yOffset The starting vertical offset (top-down) where the section should be anchored; returned updated for subsequent layout.
+-- @param yOffset The starting vertical offset (top-down) where the
+--   section should be anchored; returned updated for subsequent layout.
 -- @param refreshAll Function called after profile changes to refresh relevant widgets and UI state.
 -- @return number The updated vertical offset after placing the section's widgets.
 -- @return table The active profile dropdown widget.
@@ -157,7 +159,9 @@ local function CreateCurrentProfileSection(parent, yOffset, refreshAll)
     return yOffset, activeDropdown
 end
 
--- Builds the "Profile Actions" UI section with controls to copy from another profile, reset the current profile, and delete another profile.
+-- Builds the "Profile Actions" UI section with controls to copy from
+-- another profile, reset the current profile, and delete another
+-- profile.
 -- @param refreshAll Function called to refresh profile-related widgets after changes.
 -- @return number The updated vertical offset after laying out the section.
 -- @return table The dropdown widget used to select a profile to copy from.

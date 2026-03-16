@@ -156,8 +156,11 @@ function Addon:OnInitialize()
     ns.Print(L["LOADED_MESSAGE"])
 end
 
--- Performs addon enable-time setup: initializes the toast display system, starts listener modules, and applies an ElvUI skin if present.
--- Initializes the core ToastManager, calls `Initialize` on each module listed in `LISTENER_MODULES` if available, and invokes `ns.ElvUISkin.Apply()` when provided.
+-- Performs addon enable-time setup: initializes the toast display system,
+-- starts listener modules, and applies an ElvUI skin if present.
+-- Initializes the core ToastManager, calls `Initialize` on each module
+-- listed in `LISTENER_MODULES` if available, and invokes
+-- `ns.ElvUISkin.Apply()` when provided.
 function Addon:OnEnable()
     -- Initialize display system (always present)
     ns.ToastManager.Initialize()

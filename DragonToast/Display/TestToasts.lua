@@ -168,13 +168,16 @@ local function GetTestItems()
 end
 
 -- Builds a concrete loot data table from a test descriptor for use in test toasts.
--- @param test Table describing the test scenario. Expected fields include boolean flags `isXP`, `isHonor`, `isReputation`, `isMoney` to indicate the kind of loot, plus corresponding fields:
+-- @param test Table describing the test scenario. Expected fields include
+--   boolean flags `isXP`, `isHonor`, `isReputation`, `isMoney` to indicate
+--   the kind of loot, plus corresponding fields:
 --   - `xpAmount`, `honorAmount`, `reputationAmount` (numeric amounts for progression types)
 --   - `copperAmount` (numeric copper for money)
 --   - `icon`, `quality`, `level`, `type`, `subType` (item/currency metadata)
 --   - `victimName`, `factionName` (optional detail strings for honor/reputation)
 --   - other item fields used when producing an item entry
--- @return A loot data table representing an item, currency, XP, honor, or reputation gain suitable for displaying as a test toast.
+-- @return A loot data table representing an item, currency, XP, honor,
+--   or reputation gain suitable for displaying as a test toast.
 local function BuildTestLootData(test)
     if test.isXP then
         local amount = test.xpAmount + math_random(0, 500)
@@ -259,8 +262,11 @@ end
 
 -------------------------------------------------------------------------------
 -- Stack Test Commands (in-game verification)
--- Create a prepared item loot data table for stack tests using the Warglaive of Azzinoth.
--- @return A loot data table containing populated item fields (itemLink, itemID, itemName, itemQuality, itemLevel, itemType, itemSubType, itemIcon) suitable for dispatching a stack test toast.
+-- Create a prepared item loot data table for stack tests using the
+-- Warglaive of Azzinoth.
+-- @return A loot data table containing populated item fields (itemLink,
+--   itemID, itemName, itemQuality, itemLevel, itemType, itemSubType,
+--   itemIcon) suitable for dispatching a stack test toast.
 
 local function MakeStackTestItemData()
     return CreateTestLootData({
@@ -283,13 +289,17 @@ local function MakeStackTestXPData()
 end
 
 -- Creates a money loot data object representing a gold payout used for stacking tests.
--- @return A loot data table for a gold currency event with 50,000 copper, quality 1, item type "Currency", item subType "Gold", and icon 133784.
+-- @return A loot data table for a gold currency event with 50,000 copper,
+--   quality 1, item type "Currency", item subType "Gold", and icon 133784.
 local function MakeStackTestGoldData()
     return CreateMoneyTestLootData(50000, 1, 0, "Currency", "Gold", 133784)
 end
 
 -- Creates a test loot data object representing an honor gain from an enemy player.
--- @return A loot data table with `isHonor = true`, `honorAmount = 100`, `victimName = "Enemy Player"`, a localized label (L["FORMAT_PLUS_HONOR"]), the honor icon, and standard base loot fields (quantity, looter, isSelf, isCurrency, timestamp).
+-- @return A loot data table with `isHonor = true`, `honorAmount = 100`,
+--   `victimName = "Enemy Player"`, a localized label
+--   (L["FORMAT_PLUS_HONOR"]), the honor icon, and standard base loot
+--   fields (quantity, looter, isSelf, isCurrency, timestamp).
 local function MakeStackTestHonorData()
     return CreateProgressionTestLootData(
         "isHonor", "honorAmount", 100, L["FORMAT_PLUS_HONOR"],

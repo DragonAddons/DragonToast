@@ -45,7 +45,8 @@ local GOLD_FORMAT_VALUES = {
 -- Section builders
 -- Creates the "Layout" section in the Display tab and places its controls into the given parent.
 -- The section exposes controls bound to `db.profile.display`: max toasts, grow direction, and spacing.
--- The grow direction control triggers toast repositioning when changed; the spacing control triggers a layout update when changed.
+-- The grow direction control triggers toast repositioning when changed;
+-- the spacing control triggers a layout update when changed.
 -- @param parent UI frame that will contain the section's widgets.
 -- @param yOffset Number vertical offset (in pixels) from the parent's top where the section should start.
 -- @return Number the updated vertical offset after placing the section's widgets.
@@ -99,7 +100,8 @@ end
 
 -- Creates the "Toast Size" section inside the Display tab and positions its widgets.
 -- @param parent The parent UI frame to anchor the section's widgets to.
--- @param yOffset The starting vertical offset (in pixels) for placing the section; positive or negative values are allowed.
+-- @param yOffset The starting vertical offset (in pixels) for placing
+--   the section; positive or negative values are allowed.
 -- @return The updated vertical offset (in pixels) after placing the section's widgets.
 local function CreateSizeSection(parent, yOffset)
     local W = ns.Widgets
@@ -144,7 +146,9 @@ end
 -- The created controls read and write values in `db.profile.display`. Controls that affect layout will
 -- trigger a layout update when changed.
 -- @param parent UI frame that will contain the section's widgets.
--- @param yOffset Starting vertical offset (number) where the section should be placed; positive or negative coordinate as used by the caller.
+-- @param yOffset Starting vertical offset (number) where the section
+--   should be placed; positive or negative coordinate as used by the
+--   caller.
 -- @return number The updated vertical offset after placing the section's widgets.
 local function CreateContentSection(parent, yOffset)
     local W = ns.Widgets
@@ -217,7 +221,9 @@ local function CreateContentSection(parent, yOffset)
     return yOffset
 end
 
--- Creates the "Padding" section inside the given parent, adding vertical and horizontal padding sliders that update the saved display padding and refresh toast layout.
+-- Creates the "Padding" section inside the given parent, adding vertical
+-- and horizontal padding sliders that update the saved display padding
+-- and refresh toast layout.
 -- @param parent The parent UI frame to attach the section to.
 -- @param yOffset The current vertical offset (in pixels) where the section should start; used for positioning.
 -- @return The updated vertical offset after placing the section's widgets.

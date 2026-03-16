@@ -159,10 +159,14 @@ local function CreateFontSection(parent, db, yOffset)
     return yOffset
 end
 
--- Creates the "Background" subsection of the Appearance tab, adding color, alpha, and texture controls and returning the updated vertical offset.
+-- Creates the "Background" subsection of the Appearance tab, adding
+-- color, alpha, and texture controls and returning the updated vertical
+-- offset.
 -- @param parent The parent UI frame to attach the section's widgets to.
 -- @param db Addon database table (expects db.profile.appearance to exist and be writable).
--- @param yOffset The starting vertical offset (in pixels) where the section will be anchored; widgets are laid out downward from this value.
+-- @param yOffset The starting vertical offset (in pixels) where the
+--   section will be anchored; widgets are laid out downward from this
+--   value.
 -- @return number The updated vertical offset after placing the section's widgets.
 local function CreateBackgroundSection(parent, db, yOffset)
     local W = ns.Widgets
@@ -328,10 +332,13 @@ local function CreateGlowingBorderSection(parent, db, yOffset)
     return yOffset
 end
 
--- Creates the "Icon" appearance section on the given parent and places an icon size slider bound to the appearance settings.
+-- Creates the "Icon" appearance section on the given parent and places
+-- an icon size slider bound to the appearance settings.
 -- @param parent UI frame that will contain the section.
--- @param db Addon database; the slider reads and updates db.profile.appearance.iconSize.
--- @param yOffset Starting vertical offset (pixels) from the parent's top; the function positions widgets relative to this value.
+-- @param db Addon database; the slider reads and updates
+--   db.profile.appearance.iconSize.
+-- @param yOffset Starting vertical offset (pixels) from the parent's
+--   top; the function positions widgets relative to this value.
 -- @return The updated vertical offset after adding the section's widgets.
 local function CreateIconSection(parent, db, yOffset)
     local W = ns.Widgets

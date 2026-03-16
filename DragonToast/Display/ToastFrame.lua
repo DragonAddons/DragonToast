@@ -299,7 +299,9 @@ local function ApplyRewardLooter(frame, db)
 end
 
 -- Update the toast's looter label according to configuration and loot data.
--- Shows or hides the looter text; when the looter is the player displays `L["YOU"]` with the self looter color, otherwise displays the looter's name with a muted color.
+-- Shows or hides the looter text; when the looter is the player displays
+-- `L["YOU"]` with the self looter color, otherwise displays the looter's
+-- name with a muted color.
 -- @param frame Table representing the toast frame; must contain a `looter` FontString.
 -- @param db Table of toast configuration; expects `db.display.showLooter` (boolean).
 -- @param lootData Table with looter information. Expected fields:
@@ -605,10 +607,17 @@ local function FormatMoney(copperAmount, format)
     end
 end
 
--- Populates the toast's item-related display fields (name, quantity, item level, type, and looter) according to the provided loot data and display configuration.
--- @param frame The toast frame whose UI elements will be updated (expects fields: itemName, quantity, itemLevel, itemType, etc.).
--- @param lootData Table describing the loot (e.g., itemName, copperAmount, itemSubType, isCurrency, quantity, itemLevel, itemType); used to decide text, colors, and visibility.
--- @param db Configuration table controlling presentation (notably db.display.showQuantity, db.display.showItemLevel, db.display.showItemType, and db.display.goldFormat).
+-- Populates the toast's item-related display fields (name, quantity,
+-- item level, type, and looter) according to the provided loot data and
+-- display configuration.
+-- @param frame The toast frame whose UI elements will be updated
+--   (expects fields: itemName, quantity, itemLevel, itemType, etc.).
+-- @param lootData Table describing the loot (e.g., itemName,
+--   copperAmount, itemSubType, isCurrency, quantity, itemLevel,
+--   itemType); used to decide text, colors, and visibility.
+-- @param db Configuration table controlling presentation (notably
+--   db.display.showQuantity, db.display.showItemLevel,
+--   db.display.showItemType, and db.display.goldFormat).
 -- @param r Number red component for item name color when the item is not a currency.
 -- @param g Number green component for item name color when the item is not a currency.
 -- @param b Number blue component for item name color when the item is not a currency.
