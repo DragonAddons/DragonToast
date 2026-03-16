@@ -46,18 +46,18 @@ local function GetMailSourceLabel(index)
     if isInvoice then
         local invoiceType = GetInboxInvoiceInfo(index)
         if invoiceType == "buyer" then
-            return L["Auction Won"]
+            return L["AUCTION_WON"]
         elseif invoiceType == "seller" or invoiceType == "seller_temp_invoice" then
-            return L["Auction Sale"]
+            return L["AUCTION_SALE"]
         end
     end
 
     local _, _, sender = GetInboxHeaderInfo(index)
     if sender and sender ~= "" then
-        return string_format(L["Mail - %s"], sender)
+        return string_format(L["FORMAT_MAIL_FROM"], sender)
     end
 
-    return L["Mail"]
+    return L["MAIL"]
 end
 
 local function SnapshotItemAttachment(index, attachIndex, sourceLabel, supportsAttachmentCurrencyFlag)

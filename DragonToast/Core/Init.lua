@@ -151,7 +151,7 @@ function Addon:OnInitialize()
         ns.MinimapIcon.Initialize()
     end
 
-    ns.Print(L["Loaded. Type /dt help for commands."])
+    ns.Print(L["LOADED_MESSAGE"])
 end
 
 function Addon:OnEnable()
