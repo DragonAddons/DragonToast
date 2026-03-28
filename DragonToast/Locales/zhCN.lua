@@ -11,15 +11,21 @@ if not L then return end
 -- DragonToast/Core/Init.lua
 L["Loaded. Type /dt help for commands."] = "已加载。输入 /dt help 查看命令说明。"
 
+-- DragonToast/Display/ToastFrame.lua
+L["You"] = "你"
+L["ilvl %s"] = "物品等级 %s"
+
 -- DragonToast/Display/ToastManager.lua
 L["+%s Honor"] = "+%s 荣誉值"
 L["+%s Reputation"] = "+%s 声望值"
 L["+%s XP"] = "+%s 经验值"
 L["Drag to move"] = "拖动以移动"
 
--- DragonToast/Display/ToastFrame.lua
-L["You"] = "你"
-L["ilvl %s"] = "物品等级 %s"
+-- DragonToast/Listeners/MailListener_Shared.lua
+L["Auction Sale"] = "拍卖售出"
+L["Auction Won"] = "竞拍成功"
+L["Mail"] = "邮件"
+L["Mail - %s"] = "邮件 - %s"
 
 -- DragonToast/Listeners/MessageBridge.lua
 L["Disenchant"] = "分解"
@@ -29,12 +35,6 @@ L["Pass"] = "放弃"
 L["Roll"] = "掷骰子"
 L["Transmog"] = "幻化"
 L["Unknown"] = "未知"
-
--- DragonToast/Listeners/MailListener_Retail.lua
-L["Auction Sale"] = "拍卖售出"
-L["Auction Won"] = "竞拍成功"
-L["Mail"] = "邮件"
-L["Mail - %s"] = "邮件 - %s"
 
 -------------------------------------------------------------------------------
 -- DragonToast_Options
