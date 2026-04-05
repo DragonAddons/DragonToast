@@ -201,7 +201,10 @@ local function CreateContentSection(parent, yOffset)
         label = L["Show Item Count"],
         tooltip = L["Display total inventory count of the looted item on the toast"],
         get = function() return db.profile.display.showItemCount end,
-        set = function(value) db.profile.display.showItemCount = value end,
+        set = function(value)
+            db.profile.display.showItemCount = value
+            dtns.ToastManager:UpdateLayout()
+        end,
     })
     LC.AnchorWidget(itemCountToggle, parent, yOffset)
     yOffset = yOffset - itemCountToggle:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
