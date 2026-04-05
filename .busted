@@ -1,6 +1,6 @@
 return {
     _all = {
-        lua = "lua",
+        lua = "lua5.1",
     },
     default = {
         ROOT = { "spec" },
