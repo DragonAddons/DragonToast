@@ -42,6 +42,7 @@ local defaults = {
             showItemType = true,
             showLooter = true,
             showQuantity = true,
+            showItemCount = false,
             goldFormat = "icons",
             showIcon = true,
             textPaddingV = 6,
@@ -121,7 +122,8 @@ local SIMPLE_MIGRATIONS = {
     { version = 4, section = "filters", key = "showHonor", default = true },
     { version = 5, section = "filters", key = "showMail", default = true },
     { version = 6, section = "filters", key = "showReputation", default = true },
-    { version = 7, section = "animation", key = "pauseOnHover", default = true },
+    { version = 7, section = "animation", key = "pauseOnHover",  default = true },
+    { version = 8, section = "display",   key = "showItemCount", default = false },
 }
 
 local function MigrateProfile(db)

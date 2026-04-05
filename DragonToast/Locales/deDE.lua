@@ -8,6 +8,11 @@ local ADDON_NAME, ns = ... -- luacheck: ignore 211/ns
 local L = LibStub("AceLocale-3.0"):NewLocale(ADDON_NAME, "deDE")
 if not L then return end
 
+-- DragonToast_Options/Tabs/DisplayTab.lua
+L["Display total inventory count of the looted item on the toast"] = "Gesamte Inventaranzahl des geplunderten Gegenstands im Toast anzeigen"
+L["Show Item Count"] = "Gegenstandsanzahl anzeigen"
+L["x%d in bags"] = "x%d in Taschen"
+
 -- DragonToast/Core/Init.lua
 L["Loaded. Type /dt help for commands."] = "Geladen. Tippe /dt help für Befehle."
 
