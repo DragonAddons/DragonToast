@@ -197,6 +197,15 @@ local function CreateContentSection(parent, yOffset)
     LC.AnchorWidget(showQuantity, parent, yOffset)
     yOffset = yOffset - showQuantity:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
 
+    local itemCountToggle = W.CreateToggle(parent, {
+        label = L["Show Item Count"],
+        tooltip = L["Display total inventory count of the looted item on the toast"],
+        get = function() return db.profile.display.showItemCount end,
+        set = function(value) db.profile.display.showItemCount = value end,
+    })
+    LC.AnchorWidget(itemCountToggle, parent, yOffset)
+    yOffset = yOffset - itemCountToggle:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
+
     local showLooter = W.CreateToggle(parent, {
         label = L["Show Looter"],
         tooltip = L["Display who looted the item"],

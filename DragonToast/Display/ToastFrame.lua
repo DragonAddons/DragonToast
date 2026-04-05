@@ -21,6 +21,7 @@ local UIParent = UIParent
 local STANDARD_TEXT_FONT = STANDARD_TEXT_FONT
 local math_ceil = math.ceil
 local string_format = string.format
+local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
 local LSM = LibStub("LibSharedMedia-3.0")
 local L = ns.L
 local Utils = ns.ListenerUtils
@@ -92,6 +93,7 @@ end
 local function ApplyFonts(frame, fontPath, fontSize, secondaryFontSize, fontOutline)
     frame.itemName:SetFont(fontPath, fontSize, fontOutline)
     frame.itemLevel:SetFont(fontPath, secondaryFontSize, fontOutline)
+    frame.itemCount:SetFont(fontPath, secondaryFontSize, fontOutline)
     frame.itemType:SetFont(fontPath, secondaryFontSize, fontOutline)
     frame.looter:SetFont(fontPath, secondaryFontSize, fontOutline)
 end
@@ -115,6 +117,7 @@ local function ApplyLayout(frame, db, showIcon)
     frame.itemName:ClearAllPoints()
     frame.itemType:ClearAllPoints()
     frame.itemLevel:ClearAllPoints()
+    frame.itemCount:ClearAllPoints()
     frame.looter:ClearAllPoints()
 
     local iconGlowPad = db.appearance.qualityGlow and glowWidth or 0
@@ -140,6 +143,7 @@ local function ApplyLayout(frame, db, showIcon)
 
     frame.itemName:SetPoint("RIGHT", frame.content, "RIGHT", -padH, 0)
     frame.itemLevel:SetPoint("TOPRIGHT", frame.content, "TOPRIGHT", -padH, -padV)
+    frame.itemCount:SetPoint("TOPRIGHT", frame.content, "TOPRIGHT", -padH, -padV - DEFAULT_SECONDARY_FONT_SIZE - 2)
     frame.looter:SetPoint("BOTTOMRIGHT", frame.content, "BOTTOMRIGHT", -padH, padV)
 end
 
@@ -338,6 +342,7 @@ local function PopulateRewardToast(frame, lootData, db, r, g, b, detailText)
     frame.itemName:SetTextColor(r, g, b)
     frame.quantity:Hide()
     frame.itemLevel:Hide()
+    frame.itemCount:Hide()
 
     ApplyRewardDetail(frame, detailText)
     ApplyRewardLooter(frame, db)
@@ -383,7 +388,7 @@ local function CreateToastTextures(frame)
     frame.quantity:SetTextColor(WHITE_TEXT_COLOR.r, WHITE_TEXT_COLOR.g, WHITE_TEXT_COLOR.b)
 end
 
---- Create all text FontStrings (itemName, itemLevel, itemType, looter) on the content frame
+--- Create all text FontStrings (itemName, itemLevel, itemCount, itemType, looter) on the content frame
 local function CreateToastTexts(frame)
     frame.itemName = frame.content:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     frame.itemName:SetJustifyH("LEFT")
@@ -392,6 +397,10 @@ local function CreateToastTexts(frame)
     frame.itemLevel = frame.content:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     frame.itemLevel:SetJustifyH("RIGHT")
     frame.itemLevel:SetTextColor(ITEM_LEVEL_TEXT_COLOR.r, ITEM_LEVEL_TEXT_COLOR.g, ITEM_LEVEL_TEXT_COLOR.b)
+
+    frame.itemCount = frame.content:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    frame.itemCount:SetJustifyH("RIGHT")
+    frame.itemCount:SetTextColor(SECONDARY_TEXT_COLOR.r, SECONDARY_TEXT_COLOR.g, SECONDARY_TEXT_COLOR.b)
 
     frame.itemType = frame.content:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     frame.itemType:SetJustifyH("LEFT")
@@ -652,6 +661,17 @@ local function PopulateItemContent(frame, lootData, db, r, g, b)
         frame.itemLevel:Show()
     else
         frame.itemLevel:Hide()
+    end
+
+    -- Item count
+    if db.display.showItemCount and lootData.itemID
+        and not lootData.isCurrency and not lootData.isXP
+        and not lootData.isHonor and not lootData.isReputation then
+        local count = GetItemCount(lootData.itemID) or 0
+        frame.itemCount:SetText(string_format(L["x%d in bags"], count))
+        frame.itemCount:Show()
+    else
+        frame.itemCount:Hide()
     end
 
     -- Type/Subtype

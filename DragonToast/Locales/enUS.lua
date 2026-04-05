@@ -298,6 +298,11 @@ L["Thickness of the toast border"] = true
 L["Toast background color"] = true
 L["Width of the quality glow effect"] = true
 
+-- DragonToast_Options/Tabs/DisplayTab.lua
+L["Display total inventory count of the looted item on the toast"] = true
+L["Show Item Count"] = true
+L["x%d in bags"] = true
+
 -- DragonToast_Options/Tabs/ProfilesTab.lua
 L["Active Profile"] = true
 L["Are you sure you want to delete the profile \"%s\"?"] = true

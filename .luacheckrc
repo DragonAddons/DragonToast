@@ -53,7 +53,7 @@ files["DragonToast/"] = {
         -- WoW API
         "IsInInstance", "UnitName", "UnitClass",
         "UnitFactionGroup",
-        "GetItemInfo", "GetItemQualityColor", "C_Item", "C_Container",
+        "GetItemInfo", "GetItemQualityColor", "GetItemCount", "C_Item", "C_Container",
         "C_CurrencyInfo",
         "GetInboxHeaderInfo", "GetInboxItem", "GetInboxInvoiceInfo", "GetInboxText",
         "TakeInboxItem", "TakeInboxMoney", "AutoLootMailItem",
