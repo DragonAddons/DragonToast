@@ -20,11 +20,6 @@ local tonumber = tonumber
 
 local W = ns.DW.Widgets
 local LC = ns.DW.LayoutConstants
-
--------------------------------------------------------------------------------
--- Localization
--------------------------------------------------------------------------------
-
 local L = ns.L
 
 -------------------------------------------------------------------------------
@@ -40,8 +35,8 @@ local dtns
 local function CreateFilterToggles(parent, yOffset, db, entries)
     for i, entry in ipairs(entries) do
         local toggle = W.CreateToggle(parent, {
-            label = L[entry.label],
-            tooltip = L[entry.tooltip],
+            label = entry.label,
+            tooltip = entry.tooltip,
             get = function() return db.profile.filters[entry.key] end,
             set = function(value) db.profile.filters[entry.key] = value end,
         })
@@ -67,13 +62,13 @@ end
 local function CreateQualitySection(parent, yOffset)
     local db = dtns.Addon.db
 
-    local header = W.CreateHeader(parent, L["HEADER_LOOT_QUALITY"])
+    local header = W.CreateHeader(parent, L["Loot Quality"])
     LC.AnchorWidget(header, parent, yOffset)
     yOffset = yOffset - header:GetHeight() - LC.SPACING_AFTER_HEADER
 
     local minQuality = W.CreateDropdown(parent, {
-        label = L["MINIMUM_QUALITY"],
-        tooltip = L["TOOLTIP_MINIMUM_QUALITY"],
+        label = L["Minimum Quality"],
+        tooltip = L["Only show toasts for items of this quality or higher"],
         values = ns.QualityValues,
         get = function() return db.profile.filters.minQuality end,
         set = function(value) db.profile.filters.minQuality = tonumber(value) or 0 end,
@@ -85,10 +80,10 @@ local function CreateQualitySection(parent, yOffset)
 end
 
 local SOURCE_TOGGLES = {
-    { key = "showSelfLoot",   label = "SHOW_SELF_LOOT",    tooltip = "TOOLTIP_SHOW_SELF_LOOT" },
-    { key = "showGroupLoot",  label = "SHOW_GROUP_LOOT",   tooltip = "TOOLTIP_SHOW_GROUP_LOOT" },
-    { key = "showQuestItems", label = "SHOW_QUEST_ITEMS",  tooltip = "TOOLTIP_SHOW_QUEST_ITEMS" },
-    { key = "showMail",       label = "SHOW_MAIL",          tooltip = "TOOLTIP_SHOW_MAIL" },
+    { key = "showSelfLoot",   label = L["Show Self Loot"],    tooltip = L["Show toasts when you loot items"] },
+    { key = "showGroupLoot",  label = L["Show Group Loot"],   tooltip = L["Show toasts when group members receive loot"] },
+    { key = "showQuestItems", label = L["Show Quest Items"],  tooltip = L["Show toasts for quest item pickups"] },
+    { key = "showMail",       label = L["Show Mail"],         tooltip = L["Show toasts for mail attachments"] },
 }
 
 -- Creates the "Loot Sources" section: places a header and the source
@@ -101,7 +96,7 @@ local function CreateSourcesSection(parent, yOffset)
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
-    local header = W.CreateHeader(parent, L["HEADER_LOOT_SOURCES"])
+    local header = W.CreateHeader(parent, L["Loot Sources"])
     LC.AnchorWidget(header, parent, yOffset)
     yOffset = yOffset - header:GetHeight() - LC.SPACING_AFTER_HEADER
 
@@ -111,11 +106,11 @@ local function CreateSourcesSection(parent, yOffset)
 end
 
 local CURRENCY_TOGGLES = {
-    { key = "showGold",       label = "SHOW_GOLD",         tooltip = "TOOLTIP_SHOW_GOLD" },
-    { key = "showCurrency",   label = "SHOW_CURRENCY",     tooltip = "TOOLTIP_SHOW_CURRENCY" },
-    { key = "showXP",         label = "SHOW_XP",           tooltip = "TOOLTIP_SHOW_XP" },
-    { key = "showHonor",      label = "SHOW_HONOR",        tooltip = "TOOLTIP_SHOW_HONOR" },
-    { key = "showReputation", label = "SHOW_REPUTATION",   tooltip = "TOOLTIP_SHOW_REPUTATION" },
+    { key = "showGold",       label = L["Show Gold"],         tooltip = L["Show toasts for gold gains"] },
+    { key = "showCurrency",   label = L["Show Currency"],     tooltip = L["Show toasts for currency gains"] },
+    { key = "showXP",         label = L["Show XP"],           tooltip = L["Show toasts for experience gains"] },
+    { key = "showHonor",      label = L["Show Honor"],        tooltip = L["Show toasts for honor gains"] },
+    { key = "showReputation", label = L["Show Reputation"],   tooltip = L["Show toasts for reputation gains"] },
 }
 
 -- Creates the "Currency and Rewards" section and its filter toggles, anchored at the given vertical offset.
@@ -127,7 +122,7 @@ local function CreateCurrencySection(parent, yOffset)
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
-    local header = W.CreateHeader(parent, L["HEADER_CURRENCY_AND_REWARDS"])
+    local header = W.CreateHeader(parent, L["Currency and Rewards"])
     LC.AnchorWidget(header, parent, yOffset)
     yOffset = yOffset - header:GetHeight() - LC.SPACING_AFTER_HEADER
 
@@ -157,7 +152,7 @@ end
 
 ns.Tabs[#ns.Tabs + 1] = {
     id = "filters",
-    label = L["TAB_FILTERS"],
+    label = L["Filters"],
     order = 2,
     createFunc = CreateContent,
 }
