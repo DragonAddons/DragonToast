@@ -6,7 +6,6 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
-local LC = ns.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Cached globals
@@ -16,6 +15,13 @@ local math_abs = math.abs
 local ipairs = ipairs
 local pairs = pairs
 local tonumber = tonumber
+
+-------------------------------------------------------------------------------
+-- DragonWidgets references
+-------------------------------------------------------------------------------
+
+local W = ns.DW.Widgets
+local LC = ns.DW.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Localization
@@ -78,7 +84,6 @@ end
 -- @return number The updated vertical offset after placing the section's widgets.
 
 local function CreateAnimationSection(parent, yOffset, attentionState)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     local header = W.CreateHeader(parent, L["TAB_ANIMATION"])
@@ -111,7 +116,6 @@ end
 --   widgets; will be adjusted downward as widgets are added.
 -- @return The updated vertical offset after placing the section's header and widgets.
 local function CreateEntranceSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -159,7 +163,6 @@ end
 -- @param yOffset The starting vertical offset (pixels) where the section will be placed.
 -- @return The updated vertical offset after the section and its widgets have been laid out.
 local function CreateHoldSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -196,7 +199,6 @@ end
 -- @param yOffset The starting vertical offset; widgets are anchored relative to this value.
 -- @return The updated vertical offset after laying out the section.
 local function CreateExitSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -243,7 +245,6 @@ end
 -- @param yOffset The current vertical offset within the parent where the section should be placed.
 -- @return The updated vertical offset after adding the section.
 local function CreateSlideSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -275,7 +276,6 @@ end
 --   and attentionState.widgets.
 -- @return The updated vertical offset after placing the section's widgets.
 local function CreateAttentionSection(parent, yOffset, attentionState)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -308,9 +308,9 @@ local function CreateAttentionSection(parent, yOffset, attentionState)
     local minQuality = W.CreateDropdown(parent, {
         label = L["ATTENTION_MIN_QUALITY"],
         tooltip = L["TOOLTIP_ATTENTION_MIN_QUALITY"],
-        values = LC.QUALITY_VALUES,
+        values = ns.QualityValues,
         get = function() return db.profile.animation.attentionMinQuality end,
-        set = function(value) db.profile.animation.attentionMinQuality = tonumber(value) end,
+        set = function(value) db.profile.animation.attentionMinQuality = tonumber(value) or 0 end,
     })
     LC.AnchorWidget(minQuality, parent, yOffset)
     if initialDisabled then minQuality:SetDisabled(true) end
@@ -366,7 +366,6 @@ end
 -- Register tab
 -------------------------------------------------------------------------------
 
-ns.Tabs = ns.Tabs or {}
 ns.Tabs[#ns.Tabs + 1] = {
     id = "animation",
     label = L["TAB_ANIMATION"],

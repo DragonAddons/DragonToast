@@ -6,13 +6,19 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
-local LC = ns.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Cached globals
 -------------------------------------------------------------------------------
 
 local math_abs = math.abs
+
+-------------------------------------------------------------------------------
+-- DragonWidgets references
+-------------------------------------------------------------------------------
+
+local W = ns.DW.Widgets
+local LC = ns.DW.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Localization
@@ -52,7 +58,6 @@ local GOLD_FORMAT_VALUES = {
 -- @return Number the updated vertical offset after placing the section's widgets.
 
 local function CreateLayoutSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     local header = W.CreateHeader(parent, L["HEADER_LAYOUT"])
@@ -104,7 +109,6 @@ end
 --   the section; positive or negative values are allowed.
 -- @return The updated vertical offset (in pixels) after placing the section's widgets.
 local function CreateSizeSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -151,7 +155,6 @@ end
 --   caller.
 -- @return number The updated vertical offset after placing the section's widgets.
 local function CreateContentSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -228,7 +231,6 @@ end
 -- @param yOffset The current vertical offset (in pixels) where the section should start; used for positioning.
 -- @return The updated vertical offset after placing the section's widgets.
 local function CreatePaddingSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -271,8 +273,6 @@ end
 -- @param yOffset The starting vertical offset (number); widgets are placed relative to this value.
 -- @return The updated vertical offset after placing the section's header and widgets.
 local function CreateAnchorSection(parent, yOffset)
-    local W = ns.Widgets
-
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
     local header = W.CreateHeader(parent, L["HEADER_ANCHOR"])
@@ -326,7 +326,6 @@ end
 -- Register tab
 -------------------------------------------------------------------------------
 
-ns.Tabs = ns.Tabs or {}
 ns.Tabs[#ns.Tabs + 1] = {
     id = "display",
     label = L["TAB_DISPLAY"],

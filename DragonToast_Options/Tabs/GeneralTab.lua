@@ -6,7 +6,6 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
-local LC = ns.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Cached globals
@@ -16,6 +15,13 @@ local math_abs = math.abs
 local table_sort = table.sort
 local table_insert = table.insert
 local pairs = pairs
+
+-------------------------------------------------------------------------------
+-- DragonWidgets references
+-------------------------------------------------------------------------------
+
+local W = ns.DW.Widgets
+local LC = ns.DW.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Localization
@@ -59,7 +65,6 @@ end
 -- @return number The updated vertical offset after the section's widgets have been placed.
 
 local function CreateCoreSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     local header = W.CreateHeader(parent, L["HEADER_CORE_SETTINGS"])
@@ -112,7 +117,6 @@ end
 -- @param yOffset The starting vertical offset for placing widgets; layout proceeds downward.
 -- @return The updated vertical offset after placing the section's widgets.
 local function CreateSoundSection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -156,8 +160,6 @@ end
 -- @param yOffset The starting vertical offset (in pixels) from the top of the parent where the section is placed.
 -- @return The updated vertical offset after placing the section.
 local function CreateTestingSection(parent, yOffset)
-    local W = ns.Widgets
-
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
     local header = W.CreateHeader(parent, L["HEADER_TESTING"])
@@ -217,7 +219,6 @@ end
 -- Register tab
 -------------------------------------------------------------------------------
 
-ns.Tabs = ns.Tabs or {}
 ns.Tabs[#ns.Tabs + 1] = {
     id = "general",
     label = L["TAB_GENERAL"],

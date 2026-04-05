@@ -6,16 +6,20 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
-local LC = ns.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Cached globals
 -------------------------------------------------------------------------------
 
 local math_abs = math.abs
-local pairs = pairs
 local ipairs = ipairs
-local table_sort = table.sort
+
+-------------------------------------------------------------------------------
+-- DragonWidgets references
+-------------------------------------------------------------------------------
+
+local W = ns.DW.Widgets
+local LC = ns.DW.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Localization
@@ -28,26 +32,6 @@ local L = ns.L
 -------------------------------------------------------------------------------
 
 local dtns
-
--------------------------------------------------------------------------------
--- Helpers
--------------------------------------------------------------------------------
-
-local function BuildLSMValues(mediaType)
-    local lsm = LibStub("LibSharedMedia-3.0", true)
-    if not lsm then return {} end
-    local hash = lsm:HashTable(mediaType)
-    local values = {}
-    for name in pairs(hash) do
-        values[#values + 1] = { value = name, text = name }
-    end
-    table_sort(values, function(a, b) return a.text < b.text end)
-    return values
-end
-
-local function NotifyAppearanceChange()
-    dtns.ToastManager:UpdateLayout()
-end
 
 -------------------------------------------------------------------------------
 -- Static tables
@@ -78,7 +62,6 @@ end
 -- @return The updated vertical offset (pixels) after the preset section has been added.
 
 local function CreatePresetSection(parent, yOffset)
-    local W = ns.Widgets
     local header = W.CreateHeader(parent, L["HEADER_PRESET"])
     LC.AnchorWidget(header, parent, yOffset)
     yOffset = yOffset - header:GetHeight() - LC.SPACING_AFTER_HEADER
@@ -90,7 +73,7 @@ local function CreatePresetSection(parent, yOffset)
         get = function() return dtns.Presets:DetectPreset() or "default" end,
         set = function(value)
             dtns.Presets:ApplyPreset(value)
-            ns.RefreshVisibleWidgets()
+            if ns.RefreshVisibleWidgets then ns.RefreshVisibleWidgets() end
         end,
     })
     LC.AnchorWidget(presetDropdown, parent, yOffset)
@@ -105,7 +88,6 @@ end
 -- @param yOffset Current vertical offset from the top of `parent` where widgets should be anchored.
 -- @return The updated vertical offset after placing the Font section.
 local function CreateFontSection(parent, db, yOffset)
-    local W = ns.Widgets
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
     local header = W.CreateHeader(parent, L["HEADER_FONT"])
@@ -115,10 +97,10 @@ local function CreateFontSection(parent, db, yOffset)
     local fontFace = W.CreateDropdown(parent, {
         label = L["FONT"],
         tooltip = L["TOOLTIP_FONT"],
-        values = function() return BuildLSMValues("font") end,
+        values = function() return LC.BuildLSMValues("font") end,
         mediaType = "font",
         get = function() return db.profile.appearance.fontFace end,
-        set = function(value) db.profile.appearance.fontFace = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.fontFace = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(fontFace, parent, yOffset)
     yOffset = yOffset - fontFace:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
@@ -128,7 +110,7 @@ local function CreateFontSection(parent, db, yOffset)
         tooltip = L["TOOLTIP_PRIMARY_FONT_SIZE"],
         min = 8, max = 20, step = 1,
         get = function() return db.profile.appearance.fontSize end,
-        set = function(value) db.profile.appearance.fontSize = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.fontSize = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(fontSize, parent, yOffset)
     yOffset = yOffset - fontSize:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
@@ -140,7 +122,7 @@ local function CreateFontSection(parent, db, yOffset)
         get = function() return db.profile.appearance.secondaryFontSize end,
         set = function(value)
             db.profile.appearance.secondaryFontSize = value
-            NotifyAppearanceChange()
+            LC.NotifyAppearanceChange()
         end,
     })
     LC.AnchorWidget(secondaryFontSize, parent, yOffset)
@@ -151,7 +133,7 @@ local function CreateFontSection(parent, db, yOffset)
         tooltip = L["TOOLTIP_FONT_OUTLINE"],
         values = FONT_OUTLINE_VALUES,
         get = function() return db.profile.appearance.fontOutline end,
-        set = function(value) db.profile.appearance.fontOutline = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.fontOutline = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(fontOutline, parent, yOffset)
     yOffset = yOffset - fontOutline:GetHeight()
@@ -169,7 +151,6 @@ end
 --   value.
 -- @return number The updated vertical offset after placing the section's widgets.
 local function CreateBackgroundSection(parent, db, yOffset)
-    local W = ns.Widgets
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
     local header = W.CreateHeader(parent, L["HEADER_BACKGROUND"])
@@ -188,7 +169,7 @@ local function CreateBackgroundSection(parent, db, yOffset)
             db.profile.appearance.backgroundColor.r = r
             db.profile.appearance.backgroundColor.g = g
             db.profile.appearance.backgroundColor.b = b
-            NotifyAppearanceChange()
+            LC.NotifyAppearanceChange()
         end,
     })
     LC.AnchorWidget(bgColor, parent, yOffset)
@@ -201,7 +182,7 @@ local function CreateBackgroundSection(parent, db, yOffset)
         get = function() return db.profile.appearance.backgroundAlpha end,
         set = function(value)
             db.profile.appearance.backgroundAlpha = value
-            NotifyAppearanceChange()
+            LC.NotifyAppearanceChange()
         end,
     })
     LC.AnchorWidget(bgAlpha, parent, yOffset)
@@ -210,12 +191,12 @@ local function CreateBackgroundSection(parent, db, yOffset)
     local bgTexture = W.CreateDropdown(parent, {
         label = L["BACKGROUND_TEXTURE"],
         tooltip = L["TOOLTIP_BACKGROUND_TEXTURE"],
-        values = function() return BuildLSMValues("background") end,
+        values = function() return LC.BuildLSMValues("background") end,
         mediaType = "background",
         get = function() return db.profile.appearance.backgroundTexture end,
         set = function(value)
             db.profile.appearance.backgroundTexture = value
-            NotifyAppearanceChange()
+            LC.NotifyAppearanceChange()
         end,
     })
     LC.AnchorWidget(bgTexture, parent, yOffset)
@@ -230,7 +211,6 @@ end
 -- @param yOffset Number vertical offset (in pixels) from the top where layout should start.
 -- @return number The updated vertical offset after placing the section's widgets.
 local function CreateBorderSection(parent, db, yOffset)
-    local W = ns.Widgets
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
     local header = W.CreateHeader(parent, L["HEADER_BORDER_AND_GLOW"])
@@ -241,7 +221,7 @@ local function CreateBorderSection(parent, db, yOffset)
         label = L["QUALITY_BORDER"],
         tooltip = L["TOOLTIP_QUALITY_BORDER"],
         get = function() return db.profile.appearance.qualityBorder end,
-        set = function(value) db.profile.appearance.qualityBorder = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.qualityBorder = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(qualityBorder, parent, yOffset)
     yOffset = yOffset - qualityBorder:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
@@ -251,7 +231,7 @@ local function CreateBorderSection(parent, db, yOffset)
         tooltip = L["TOOLTIP_BORDER_SIZE"],
         min = 0, max = 20, step = 1,
         get = function() return db.profile.appearance.borderSize end,
-        set = function(value) db.profile.appearance.borderSize = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.borderSize = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(borderSize, parent, yOffset)
     yOffset = yOffset - borderSize:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
@@ -261,7 +241,7 @@ local function CreateBorderSection(parent, db, yOffset)
         tooltip = L["TOOLTIP_BORDER_INSET"],
         min = 0, max = 20, step = 1,
         get = function() return db.profile.appearance.borderInset end,
-        set = function(value) db.profile.appearance.borderInset = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.borderInset = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(borderInset, parent, yOffset)
     yOffset = yOffset - borderInset:GetHeight() - LC.SPACING_BETWEEN_WIDGETS
@@ -269,12 +249,12 @@ local function CreateBorderSection(parent, db, yOffset)
     local borderTexture = W.CreateDropdown(parent, {
         label = L["BORDER_TEXTURE"],
         tooltip = L["TOOLTIP_BORDER_TEXTURE"],
-        values = function() return BuildLSMValues("border") end,
+        values = function() return LC.BuildLSMValues("border") end,
         mediaType = "border",
         get = function() return db.profile.appearance.borderTexture end,
         set = function(value)
             db.profile.appearance.borderTexture = value
-            NotifyAppearanceChange()
+            LC.NotifyAppearanceChange()
         end,
     })
     LC.AnchorWidget(borderTexture, parent, yOffset)
@@ -284,7 +264,7 @@ local function CreateBorderSection(parent, db, yOffset)
         label = L["QUALITY_GLOW"],
         tooltip = L["TOOLTIP_QUALITY_GLOW"],
         get = function() return db.profile.appearance.qualityGlow end,
-        set = function(value) db.profile.appearance.qualityGlow = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.qualityGlow = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(qualityGlow, parent, yOffset)
     yOffset = yOffset - qualityGlow:GetHeight()
@@ -298,7 +278,6 @@ end
 -- @param yOffset The starting vertical offset (number) where the section should be placed.
 -- @return The updated vertical offset after placing the section's widgets.
 local function CreateGlowingBorderSection(parent, db, yOffset)
-    local W = ns.Widgets
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
     local header = W.CreateHeader(parent, L["HEADER_GLOWING_BORDER"])
@@ -308,12 +287,12 @@ local function CreateGlowingBorderSection(parent, db, yOffset)
     local statusBarTexture = W.CreateDropdown(parent, {
         label = L["GLOW_TEXTURE"],
         tooltip = L["TOOLTIP_GLOW_TEXTURE"],
-        values = function() return BuildLSMValues("statusbar") end,
+        values = function() return LC.BuildLSMValues("statusbar") end,
         mediaType = "statusbar",
         get = function() return db.profile.appearance.statusBarTexture end,
         set = function(value)
             db.profile.appearance.statusBarTexture = value
-            NotifyAppearanceChange()
+            LC.NotifyAppearanceChange()
         end,
     })
     LC.AnchorWidget(statusBarTexture, parent, yOffset)
@@ -324,7 +303,7 @@ local function CreateGlowingBorderSection(parent, db, yOffset)
         tooltip = L["TOOLTIP_GLOW_WIDTH"],
         min = 0, max = 12, step = 1,
         get = function() return db.profile.appearance.glowWidth end,
-        set = function(value) db.profile.appearance.glowWidth = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.glowWidth = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(glowWidth, parent, yOffset)
     yOffset = yOffset - glowWidth:GetHeight()
@@ -341,7 +320,6 @@ end
 --   top; the function positions widgets relative to this value.
 -- @return The updated vertical offset after adding the section's widgets.
 local function CreateIconSection(parent, db, yOffset)
-    local W = ns.Widgets
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
     local header = W.CreateHeader(parent, L["HEADER_ICON"])
@@ -353,7 +331,7 @@ local function CreateIconSection(parent, db, yOffset)
         tooltip = L["TOOLTIP_ICON_SIZE"],
         min = 16, max = 64, step = 2,
         get = function() return db.profile.appearance.iconSize end,
-        set = function(value) db.profile.appearance.iconSize = value; NotifyAppearanceChange() end,
+        set = function(value) db.profile.appearance.iconSize = value; LC.NotifyAppearanceChange() end,
     })
     LC.AnchorWidget(iconSize, parent, yOffset)
     yOffset = yOffset - iconSize:GetHeight()
@@ -384,7 +362,6 @@ end
 -- Register tab
 -------------------------------------------------------------------------------
 
-ns.Tabs = ns.Tabs or {}
 ns.Tabs[#ns.Tabs + 1] = {
     id = "appearance",
     label = L["TAB_APPEARANCE"],

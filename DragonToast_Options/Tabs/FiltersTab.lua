@@ -6,7 +6,6 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
-local LC = ns.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Cached globals
@@ -14,6 +13,13 @@ local LC = ns.LayoutConstants
 
 local math_abs = math.abs
 local tonumber = tonumber
+
+-------------------------------------------------------------------------------
+-- DragonWidgets references
+-------------------------------------------------------------------------------
+
+local W = ns.DW.Widgets
+local LC = ns.DW.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Localization
@@ -32,7 +38,6 @@ local dtns
 -------------------------------------------------------------------------------
 
 local function CreateFilterToggles(parent, yOffset, db, entries)
-    local W = ns.Widgets
     for i, entry in ipairs(entries) do
         local toggle = W.CreateToggle(parent, {
             label = L[entry.label],
@@ -60,7 +65,6 @@ end
 -- @return The updated vertical offset after placing the section's widgets.
 
 local function CreateQualitySection(parent, yOffset)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     local header = W.CreateHeader(parent, L["HEADER_LOOT_QUALITY"])
@@ -70,9 +74,9 @@ local function CreateQualitySection(parent, yOffset)
     local minQuality = W.CreateDropdown(parent, {
         label = L["MINIMUM_QUALITY"],
         tooltip = L["TOOLTIP_MINIMUM_QUALITY"],
-        values = LC.QUALITY_VALUES,
+        values = ns.QualityValues,
         get = function() return db.profile.filters.minQuality end,
-        set = function(value) db.profile.filters.minQuality = tonumber(value) end,
+        set = function(value) db.profile.filters.minQuality = tonumber(value) or 0 end,
     })
     LC.AnchorWidget(minQuality, parent, yOffset)
     yOffset = yOffset - minQuality:GetHeight()
@@ -97,7 +101,7 @@ local function CreateSourcesSection(parent, yOffset)
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
-    local header = ns.Widgets.CreateHeader(parent, L["HEADER_LOOT_SOURCES"])
+    local header = W.CreateHeader(parent, L["HEADER_LOOT_SOURCES"])
     LC.AnchorWidget(header, parent, yOffset)
     yOffset = yOffset - header:GetHeight() - LC.SPACING_AFTER_HEADER
 
@@ -123,7 +127,7 @@ local function CreateCurrencySection(parent, yOffset)
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
 
-    local header = ns.Widgets.CreateHeader(parent, L["HEADER_CURRENCY_AND_REWARDS"])
+    local header = W.CreateHeader(parent, L["HEADER_CURRENCY_AND_REWARDS"])
     LC.AnchorWidget(header, parent, yOffset)
     yOffset = yOffset - header:GetHeight() - LC.SPACING_AFTER_HEADER
 
@@ -151,7 +155,6 @@ end
 -- Register tab
 -------------------------------------------------------------------------------
 
-ns.Tabs = ns.Tabs or {}
 ns.Tabs[#ns.Tabs + 1] = {
     id = "filters",
     label = L["TAB_FILTERS"],

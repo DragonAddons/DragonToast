@@ -6,7 +6,6 @@
 -------------------------------------------------------------------------------
 
 local ADDON_NAME, ns = ...
-local LC = ns.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Cached globals
@@ -17,6 +16,13 @@ local table_sort = table.sort
 local math_abs = math.abs
 local StaticPopup_Show = StaticPopup_Show
 local StaticPopupDialogs = StaticPopupDialogs
+
+-------------------------------------------------------------------------------
+-- DragonWidgets references
+-------------------------------------------------------------------------------
+
+local W = ns.DW.Widgets
+local LC = ns.DW.LayoutConstants
 
 -------------------------------------------------------------------------------
 -- Localization
@@ -39,7 +45,9 @@ StaticPopupDialogs["DRAGONTOAST_OPTIONS_RESET_PROFILE"] = {
     button1 = L["RESET"],
     button2 = L["CANCEL"],
     OnAccept = function()
-        dtns.Addon.db:ResetProfile()
+        local dt = ns.dtns
+        if not dt or not dt.Addon or not dt.Addon.db then return end
+        dt.Addon.db:ResetProfile()
     end,
     timeout = 0,
     whileDead = true,
@@ -53,9 +61,10 @@ StaticPopupDialogs["DRAGONTOAST_OPTIONS_DELETE_PROFILE"] = {
     button2 = L["CANCEL"],
     OnAccept = function(self)
         local profileName = self.data
-        if profileName then
-            dtns.Addon.db:DeleteProfile(profileName)
-        end
+        if not profileName then return end
+        local dt = ns.dtns
+        if not dt or not dt.Addon or not dt.Addon.db then return end
+        dt.Addon.db:DeleteProfile(profileName)
     end,
     timeout = 0,
     whileDead = true,
@@ -105,7 +114,6 @@ end
 -- @return table The active profile dropdown widget.
 
 local function CreateCurrentProfileSection(parent, yOffset, refreshAll)
-    local W = ns.Widgets
     local db = dtns.Addon.db
     local newProfileName = ""
 
@@ -167,7 +175,6 @@ end
 -- @return table The dropdown widget used to select a profile to copy from.
 -- @return table The dropdown widget used to select a profile to delete.
 local function CreateActionsSection(parent, yOffset, refreshAll)
-    local W = ns.Widgets
     local db = dtns.Addon.db
 
     yOffset = yOffset - LC.SPACING_BETWEEN_SECTIONS
@@ -205,10 +212,7 @@ local function CreateActionsSection(parent, yOffset, refreshAll)
         values = GetOtherProfileValues,
         get = function() return "" end,
         set = function(value)
-            local dialog = StaticPopup_Show("DRAGONTOAST_OPTIONS_DELETE_PROFILE", value)
-            if dialog then
-                dialog.data = value
-            end
+            StaticPopup_Show("DRAGONTOAST_OPTIONS_DELETE_PROFILE", value)
         end,
     })
     LC.AnchorWidget(deleteDropdown, parent, yOffset)
@@ -261,7 +265,6 @@ end
 -- Register tab
 -------------------------------------------------------------------------------
 
-ns.Tabs = ns.Tabs or {}
 ns.Tabs[#ns.Tabs + 1] = {
     id = "profiles",
     label = L["TAB_PROFILES"],
