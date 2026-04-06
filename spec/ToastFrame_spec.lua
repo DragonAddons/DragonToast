@@ -313,6 +313,16 @@ describe("ToastFrame item count display", function()
         assert.equal("x0 in bags", frame.itemCount._text)
     end)
 
+    it("hides item count for other player's loot (isSelf = false)", function()
+        _mockGetItemCount.fn = function() return 3 end
+        ns.Addon.db.profile.display.showItemCount = true
+        local data = makeItemData({ isSelf = false, itemID = 19019 })
+
+        ns.ToastFrame.Populate(frame, data)
+
+        assert.is_false(frame.itemCount._shown)
+    end)
+
     it("anchors itemCount to content TOPRIGHT regardless of itemLevel visibility", function()
         ns.Addon.db.profile.display.showItemLevel = false
         local data = makeItemData()
