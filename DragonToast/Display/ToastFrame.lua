@@ -683,8 +683,8 @@ local function PopulateItemContent(frame, lootData, db, r, g, b)
         frame.itemLevel:Hide()
     end
 
-    -- Item count
-    if db.display.showItemCount and lootData.itemID
+    -- Item count (only meaningful for local player's loot - GetItemCount queries local inventory)
+    if db.display.showItemCount and lootData.isSelf and lootData.itemID
         and not lootData.isCurrency and not lootData.isXP
         and not lootData.isHonor and not lootData.isReputation then
         local count = GetItemCount(lootData.itemID) or 0
