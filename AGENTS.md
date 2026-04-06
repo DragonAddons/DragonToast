@@ -29,7 +29,7 @@ CI runs Luacheck via `nebularg/actions-luacheck@v1` on `pull_request_target` to 
 
 ### Testing
 
-**No automated test framework.** Test manually in-game:
+Busted tests run in CI. Run locally with `busted --verbose`. Test manually in-game:
 
 1. `/dt test` - Show a single test toast
 2. `/dt testmode` - Toggle continuous test toasts (2.5s interval) for live config preview
