@@ -4,6 +4,37 @@
 
 * fix changelog list items ([#65](https://github.com/Xerrion/DragonToast/issues/65)) ([1c399f4](https://github.com/Xerrion/DragonToast/commit/1c399f41beacb7b0b8b07ddd63df7422190ece88))
 
+## [3.2.1](https://github.com/Xerrion/DragonToast/compare/3.2.0...3.2.1) (2026-04-06)
+
+
+### 🐛 Bug Fixes
+
+* hide item bag count on other players' loot toasts ([#157](https://github.com/Xerrion/DragonToast/issues/157)) ([#158](https://github.com/Xerrion/DragonToast/issues/158)) ([2074d29](https://github.com/Xerrion/DragonToast/commit/2074d293e81a94687f7522bb6eb409c6b228b080))
+
+## [3.2.0](https://github.com/Xerrion/DragonToast/compare/3.1.0...3.2.0) (2026-04-05)
+
+
+### 🚀 Features
+
+* embed DragonWidgets as shared widget library in DragonToast_Options ([#147](https://github.com/Xerrion/DragonToast/issues/147)) ([d306403](https://github.com/Xerrion/DragonToast/commit/d306403deed1c68dc682755827a6182471438df7))
+* show inventory item count on loot toasts ([#151](https://github.com/Xerrion/DragonToast/issues/151)) ([#152](https://github.com/Xerrion/DragonToast/issues/152)) ([d35db07](https://github.com/Xerrion/DragonToast/commit/d35db07b82e1e1b0ad52b039d1d637681c185e87))
+
+
+### 🐛 Bug Fixes
+
+* correct DragonWidgets embedded library paths in DragonToast_Options.toc ([12bd6a6](https://github.com/Xerrion/DragonToast/commit/12bd6a671d3b9cd1afab83ab16efc566329840ab))
+* localize all user-facing strings in main addon ([#150](https://github.com/Xerrion/DragonToast/issues/150)) ([bb37aac](https://github.com/Xerrion/DragonToast/commit/bb37aacca25574ba2edc53dc8a0451d59c8a30d7))
+
+
+### 🚜 Refactor
+
+* slot-based layout engine in ToastFrame ([#153](https://github.com/Xerrion/DragonToast/issues/153)) ([#154](https://github.com/Xerrion/DragonToast/issues/154)) ([f8f9800](https://github.com/Xerrion/DragonToast/commit/f8f9800c131a703579848b74193729bd75e5db18))
+
+
+### ⚙️ Miscellaneous Tasks
+
+* migrate to structured label taxonomy ([#145](https://github.com/Xerrion/DragonToast/issues/145)) ([d3c013d](https://github.com/Xerrion/DragonToast/commit/d3c013d5b5edd1faf61405a3f3062c0c0faa6b46))
+
 ## [3.1.0](https://github.com/Xerrion/DragonToast/compare/3.0.0...3.1.0) (2026-03-28)
 
 
