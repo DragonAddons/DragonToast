@@ -4,6 +4,18 @@
 
 * fix changelog list items ([#65](https://github.com/Xerrion/DragonToast/issues/65)) ([1c399f4](https://github.com/Xerrion/DragonToast/commit/1c399f41beacb7b0b8b07ddd63df7422190ece88))
 
+## [3.4.0](https://github.com/Xerrion/DragonToast/compare/3.3.0...3.4.0) (2026-04-15)
+
+
+### 🚀 Features
+
+* event-driven item loading and queue stagger ([#167](https://github.com/Xerrion/DragonToast/issues/167)) ([#168](https://github.com/Xerrion/DragonToast/issues/168)) ([99181d0](https://github.com/Xerrion/DragonToast/commit/99181d05cc65d20ef4c5f43adf54e07925dab3d9))
+
+
+### 🐛 Bug Fixes
+
+* correct DragonWidgets external path in .pkgmeta ([#170](https://github.com/Xerrion/DragonToast/issues/170)) ([b850a1f](https://github.com/Xerrion/DragonToast/commit/b850a1f480fb3bc8d2310519db86dc7e484987b9))
+
 ## [3.3.0](https://github.com/Xerrion/DragonToast/compare/3.2.1...3.3.0) (2026-04-14)
 
 
