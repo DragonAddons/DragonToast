@@ -555,9 +555,11 @@ local function SetupToastScripts(frame)
             end
         end
 
-        if not resumed then
+        if not resumed and self._phase == nil and not self._isExiting then
             ns.ToastManager.OnToastFinished(self)
         end
+        -- If _phase is set, the LibAnimate lifecycle is still running naturally
+        -- (e.g. attention phase was never paused); it will call OnToastFinished itself.
     end)
 end
 
